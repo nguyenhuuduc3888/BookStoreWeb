@@ -1,0 +1,11 @@
+.divider:after,
+.divider:before {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: #eee;
+}
+.img{
+  background-image: url("../../assets/Ảnh minh họa (3).png")!important;
+  background-repeat: no-repeat;
+}
