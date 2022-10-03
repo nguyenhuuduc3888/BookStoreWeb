@@ -650,10 +650,9 @@ section {
 --------------------------------------------------------------*/
 .why-us .content {
   padding: 10px;
-  background-image: url("../../assets/s6.jpg");
   border-radius: 4px;
   color:#EBA850;
-  background-size: cover;
+
 }
 h3 a{
   color: #EBA850 !important;

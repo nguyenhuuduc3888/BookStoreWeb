@@ -1,0 +1,93 @@
+
+<div class="container">
+  <div class="row">
+    <table style="text-align: center" class="table text-secondary">
+      <thead style="background-color: #EBA850;font-size: 15px;color: white;border-radius: 10px">
+      <th>Stt</th>
+      <th>Tên</th>
+      <th>Email</th>
+      <th>Số điện thoại</th>
+      <th>Nội dung</th>
+      <th>Xóa</th>
+      </thead>
+      <tbody>
+      <tr *ngFor="let contact of contactList,index as i">
+        <td>{{i + 1 + number * pageSize}}</td>
+        <td>{{contact.name}}</td>
+        <td>{{contact.email}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.content}}</td>
+        <td>
+          <!--nút xóa "-->
+          <button type="button" class="btn btn-outline-success"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="openDelete(contact)">
+            Xóa
+          </button>
+        </td>
+
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div style="height: 50px;position: relative" class="container pagination-advertisement mb-3">
+    <ul class="pagination justify-content-end" style="text-align: right">
+      <li>
+        <select class="form-select" (change)="totalElement($event)">
+          <option value="6">6</option>
+          <option value="12">12</option>
+          <option value="18">18</option>
+          <option value="full">Tất Cả</option>
+        </select>
+      </li>
+      <li class="page-item">
+            <span style="margin: 0 20px 0 20px">{{pageSize * indexPagination + 1}}
+              - {{pageSize * indexPagination + numberOfElement}} trên {{totalElements}}</span>
+        <button (click)="previousPage($event)" [ngStyle]="{'display':previousPageStyle}" type="button"
+                class="btn btn-outline-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+               class="bi bi-chevron-left" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+          </svg>
+        </button>
+        <button (click)="nextPage($event)" [ngStyle]="{'display':nextPageStyle}" style="margin-left: 10px"
+                type="button"
+                class="btn btn-outline-primary">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+               class="bi bi-chevron-right" viewBox="0 0 16 16">
+            <path fill-rule="evenodd"
+                  d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/>
+          </svg>
+        </button>
+      </li>
+    </ul>
+  </div>
+  <!-- kết thúc phân trang-->
+</div>
+
+<div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
+<!--modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel" style="color: #EBA850">Xóa liên hệ</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Close"></button>
+      </div>
+      <div class="modal-body" style="color: red">
+        <H5>Bạn có muốn xóa liên hệ: <span style="color: #EBA850;font-size: 20px;font-weight: 500">{{nameDelete}}</span>
+        </H5>
+        <br>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Không
+        </button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="delete(idDelete)">Có</button>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,145 @@
+
+<div class="container-fluid">
+  <div class="col-12 center">
+    <div class="row">
+      <div class="col-3">
+      </div>
+      <div class="col-6 right-center" style="border-radius: 10px;background-color: white">
+        <div id="form" class="text-black">
+          <form [formGroup]="bookForm" (ngSubmit)="submit()" novalidate>
+            <div>
+              <label><h1 style="color:  #EBA850">Thêm mới sách </h1></label>
+            </div>
+            <input class="form-control form-control-lg" type="hidden"
+                   aria-label=".form-control-lg example" formControlName="id">
+            <div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="text" placeholder="Mã sách"
+                     aria-label=".form-control-lg example" formControlName="codeBook">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.codeBook?.valid&&(bookForm.controls.codeBook?.dirty||bookForm.controls.codeBook?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="text" placeholder="Tên sách"
+                     aria-label=".form-control-lg example" formControlName="bookName">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.bookName?.valid&&(bookForm.controls.bookName?.dirty||bookForm.controls.bookName?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="text" placeholder="Giá"
+                     aria-label=".form-control-lg example" formControlName="price">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.price?.valid&&(bookForm.controls.price?.dirty||bookForm.controls.price?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="text" placeholder="Tác giả"
+                     aria-label=".form-control-lg example" formControlName="author">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.author?.valid&&(bookForm.controls.author?.dirty||bookForm.controls.author?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="text" placeholder="Số trang"
+                     aria-label=".form-control-lg example" formControlName="totalPages">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.totalPages?.valid&&(bookForm.controls.totalPages?.dirty||bookForm.controls.totalPages?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="text" placeholder="Kích thước"
+                     aria-label=".form-control-lg example" formControlName="size">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.size?.valid&&(bookForm.controls.size?.dirty||bookForm.controls.size?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="text" placeholder="Nhà xuất bản"
+                     aria-label=".form-control-lg example" formControlName="publicationCompany">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.publicationCompany?.valid&&(bookForm.controls.publicationCompany?.dirty||bookForm.controls.publicationCompany?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="text" placeholder="Giới thiệu"
+                     aria-label=".form-control-lg example" formControlName="introduce">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.introduce?.valid&&(bookForm.controls.introduce?.dirty||bookForm.controls.introduce?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <div>
+              <input class="form-control form-control-lg" type="date" placeholder="Ngày phát hành"
+                     aria-label=".form-control-lg example" formControlName="releaseDate">
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.releaseDate?.valid&&(bookForm.controls.releaseDate?.dirty||bookForm.controls.releaseDate?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
+            <!--select option-->
+            <div>
+              <select class="form-control form-control-lg" type="text"
+                      aria-label=".form-control-lg example" formControlName="category">
+                <option value="" disabled>--Chọn Danh Mục--</option>
+                <option *ngFor="let category of categoryList" [ngValue]="category">{{category.categoryName}}</option>
+              </select>
+            </div>
+            <div style="color: red"
+                 *ngIf="!bookForm.controls.category?.valid&&(bookForm.controls.category?.dirty||bookForm.controls.category?.touched)">
+              Không được để trống
+            </div>
+            <div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
+            <div style="margin-top: 20px">
+              <input type="file" class="form-control"  style="width: 48%" multiple (change)="selectFile($event)"
+                     (change)="onFileSelected($event)"  >
+            </div>
+            <div style="margin-top: 20px">
+              <img *ngIf="!editImageState" [src]="bookForm.get('image').value" width="300" height="auto" >
+              <img class="preview-img rounded" [src]="url" *ngIf="editImageState" width="300" height="auto"  >
+            </div>
+            <div style="color: red" *ngIf="checkImgSize == true" class="form-text text-danger mt-1 px-2">Kích thước ảnh quá lớn.</div>
+            <div  style="color: red" *ngIf="checkImg == true && checkImgSize == false && regexImageUrl == false"
+                  class="form-text text-danger mt-1 px-2">Chọn ảnh.
+            </div>
+            <div  style="color: red" *ngIf="regexImageUrl == true && checkImgSize == false" class="form-text text-danger mt-1 px-2">Sai định dạng
+              ảnh.
+            </div>
+
+            <!--Nut luu-->
+            <div class="vc_empty_space" style="height: 15px"><span class="vc_empty_space_inner"></span></div>
+            <div class="button d-grid gap-2 d-md-flex justify-content-md-around" style="margin-top: 20px">
+              <button style="height: 38px" class="btn btn-outline-danger back" [routerLink]="['/manager']">Quay lại</button>
+              <button type="submit" *ngIf="buttonAdvertisementStatus" style="height: 38px;width: 121px" class="btn btn-outline-success" [disabled]="!bookForm.valid"> Thêm mới </button>
+              <button *ngIf="!buttonAdvertisementStatus" style="height: 38px;width: 121px" class="btn btn-outline-success disabled" >
+                <div class="spinner-border spinner-border-sm "></div>
+                Đang tải ...
+              </button>
+              <button style="height: 38px" class="btn btn-outline-secondary" type="reset" >Nhập lại</button>
+            </div>
+            <div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
+          </form>
+        </div>
+      </div>
+      <div class="col-3">
+      </div>
+    </div>
+  </div>
+</div>

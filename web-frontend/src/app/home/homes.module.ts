@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomesRoutingModule } from './homes-routing.module';
 import {HomeComponent} from './home.component';
+import {HttpClientModule} from '@angular/common/http';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -9,7 +11,9 @@ import {HomeComponent} from './home.component';
   ],
   imports: [
     CommonModule,
-    HomesRoutingModule
+    HomesRoutingModule,
+    HttpClientModule,
+    ReactiveFormsModule
   ]
 })
 export class HomesModule { }

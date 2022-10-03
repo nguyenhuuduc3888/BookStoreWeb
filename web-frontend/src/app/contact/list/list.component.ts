@@ -1,30 +1,20 @@
 import {Component, OnInit} from '@angular/core';
-import {BookService} from '../service/book.service';
+import {ContactService} from '../../service/contact.service';
+import {Contact} from '../../model/contact';
+import {Book} from '../../model/book';
+import {Category} from '../../model/category';
 import {ToastrService} from 'ngx-toastr';
-import {Book} from '../model/book';
-import {Category} from '../model/category';
-import {FormControl, FormGroup} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-list',
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.css']
 })
-export class HomeComponent implements OnInit {
-  searchForm: FormGroup = new FormGroup({
-    author: new FormControl(''),
-    bookName: new FormControl(''),
-    category: new FormGroup({
-      categoryName: new FormControl('')
-    })
-  });
-
-  categorySearch = '';
-  nameSearch = '';
-  authorSearch = '';
-  bookList: Book [] = [];
-  categoryList: Category [] = [];
+export class ListComponent implements OnInit {
+  contactList: Contact [] = [];
+  nameDelete: any;
+  idDelete: number;
   number: number;
   indexPagination = 0;
   totalPage: string[];
@@ -35,52 +25,34 @@ export class HomeComponent implements OnInit {
   nextPageStyle = 'inline-block';
   displayPagination = 'inline-block';
 
-  constructor(private title: Title, private bookService: BookService, private toastService: ToastrService) {
-    this.title.setTitle('Trang chủ');
+  constructor(private contactService: ContactService, private toastService: ToastrService, private title: Title) {
+    this.title.setTitle('Danh sách liên hệ');
   }
 
   ngOnInit(): void {
-    this.searchBook();
-    this.getListSearch();
-    this.getCategoryList();
+    this.getList();
   }
 
-  getCategoryList() {
-    this.bookService.getListCategory().subscribe(data => {
-      this.categoryList = data;
-      console.log(this.categoryList + ' danh mục');
-    });
-  }
-
-  getListSearch() {
-    this.bookService.getListAndSearch(this.indexPagination, this.categorySearch, this.authorSearch,
-      this.nameSearch, this.pageSize).subscribe((data?: any) => {
+  getList() {
+    this.contactService.getList(this.indexPagination, this.pageSize).subscribe((data?: any) => {
       if (data === null) {
         this.totalPage = new Array(0);
-        this.bookList = [];
+        this.contactList = [];
         this.displayPagination = 'none';
       } else {
         this.number = data?.number;
         console.log(this.number);
         this.pageSize = data?.size;
         this.numberOfElement = data?.numberOfElements;
-        this.bookList = data?.content;
-        console.log(this.bookList + ' ok');
+        this.contactList = data?.content;
+        console.log(this.contactList + ' ok');
         this.totalElements = data?.totalElements;
       }
       this.checkPreviousAndNext();
     }, error => {
-      this.bookList = null;
+      this.contactList = null;
     });
   }
-
-  searchBook() {
-    this.categorySearch = this.searchForm.value.category.categoryName;
-    this.authorSearch = this.searchForm.value.author;
-    this.nameSearch = this.searchForm.value.bookName;
-    this.getListSearch();
-  }
-
 
   previousPage(event: any) {
     event.preventDefault();
@@ -131,4 +103,19 @@ export class HomeComponent implements OnInit {
         break;
     }
   }
+
+  openDelete(contact: Contact) {
+    this.nameDelete = contact.name;
+    this.idDelete = contact.id;
+  }
+
+  delete(idDelete: number) {
+    this.contactService.delete(idDelete).subscribe(() => {
+      this.ngOnInit();
+      this.toastService.success('Xóa thành công', '--Đã thực hiện--', {
+        timeOut: 2000, progressBar: false,
+      });
+    });
+  }
+
 }

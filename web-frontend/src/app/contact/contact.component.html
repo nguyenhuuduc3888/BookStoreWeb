@@ -1,42 +1,57 @@
 
-<div class="vc_empty_space" style="height: 90px"><span class="vc_empty_space_inner"></span></div>
-
-<div  style=" box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 25px;"class="contact1 card text-black ">
+<div style=" box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 25px;" class="contact1 card text-black ">
   <div class="container-contact1">
     <div class="contact1-pic js-tilt" data-tilt>
       <img src="../../assets/dang_ky.png" alt="IMG">
     </div>
 
-    <form class="contact1-form validate-form">
-				<span  style="color: #EBA850" class="contact1-form-title">
+    <form [formGroup]="contactForm" (ngSubmit)="submit()" class="contact1-form validate-form">
+				<span style="color: #EBA850" class="contact1-form-title">
 				<h3 style="font-weight: 700">Liên hệ</h3>
 				</span>
 
       <div class="wrap-input1 validate-input">
-        <input class="input1" type="text" name="name" placeholder="Tên">
-        <span class="shadow-input1"></span>
+        <input formControlName="id" type="hiden">
+      </div>
+      <div class="wrap-input1 validate-input">
+        <input formControlName="name" type="hiden" class="input1" type="text" name="name" placeholder="Tên">
+        <div style="color: red"
+             *ngIf="!contactForm.controls.name?.valid&&
+             (contactForm.controls.name?.dirty||contactForm.controls.name?.touched)">
+          Không được để trống
+        </div>
       </div>
 
-      <div class="wrap-input1 validate-input" >
-        <input class="input1" type="text" name="email" placeholder="Email">
-        <span class="shadow-input1"></span>
+      <div class="wrap-input1 validate-input">
+        <input formControlName="email" class="input1" type="text" name="email" placeholder="Email">
+        <div style="color: red"
+             *ngIf="!contactForm.controls.email?.valid&&
+             (contactForm.controls.email?.dirty||contactForm.controls.email?.touched)">
+          Không được để trống
+        </div>
       </div>
 
-      <div class="wrap-input1 validate-input" >
-        <input class="input1" type="text" name="subject" placeholder="Số điện thoại">
-        <span class="shadow-input1"></span>
+      <div class="wrap-input1 validate-input">
+        <input formControlName="phone" class="input1" type="text" name="subject" placeholder="Số điện thoại">
+        <div style="color: red"
+             *ngIf="!contactForm.controls.phone?.valid&&
+             (contactForm.controls.phone?.dirty||contactForm.controls.phone?.touched)">
+          Không được để trống
+        </div>
       </div>
 
-      <div class="wrap-input1 validate-input" >
-        <textarea class="input1" name="message" placeholder="Nội dung"></textarea>
-        <span class="shadow-input1"></span>
+      <div class="wrap-input1 validate-input">
+        <textarea formControlName="content" class="input1" name="message" placeholder="Nội dung"></textarea>
+        <div style="color: red"
+             *ngIf="!contactForm.controls.content?.valid&&
+             (contactForm.controls.content?.dirty||contactForm.controls.content?.touched)">
+          Không được để trống
+        </div>
       </div>
-
       <div class="container-contact1-form-btn">
-        <button class="contact1-form-btn">
-						<span>
-Gởi liên hệ				<i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-						</span>
+        <button class="btn btn-outline-success" style="background-color: #EBA850" type="submit" (keyup.enter)="submit()"
+                [disabled]="!contactForm.valid ">
+          Gởi liên hệ
         </button>
       </div>
     </form>

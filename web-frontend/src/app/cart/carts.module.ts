@@ -2,6 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CartsRoutingModule} from './carts-routing.module';
 import {CartComponent} from './cart.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,9 @@ import {CartComponent} from './cart.component';
   ],
   imports: [
     CommonModule,
-    CartsRoutingModule
+    CartsRoutingModule,
+    HttpClientModule
+
   ]
 })
 export class CartsModule {

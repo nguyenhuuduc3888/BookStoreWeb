@@ -1,17 +1,18 @@
 import {Component, OnInit} from '@angular/core';
-import {BookService} from '../service/book.service';
+import {BookService} from '../../service/book.service';
 import {ToastrService} from 'ngx-toastr';
-import {Book} from '../model/book';
-import {Category} from '../model/category';
+import {Book} from '../../model/book';
+import {Category} from '../../model/category';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  selector: 'app-book-manager-book',
+  templateUrl: './book-manager.component.html',
+  styleUrls: ['./book-manager.component.css']
 })
-export class HomeComponent implements OnInit {
+export class BookManagerComponent implements OnInit {
+
   searchForm: FormGroup = new FormGroup({
     author: new FormControl(''),
     bookName: new FormControl(''),
@@ -20,11 +21,13 @@ export class HomeComponent implements OnInit {
     })
   });
 
+  bookList: Book[] = [];
+  categoryList: Category[] = [];
+  nameDelete: any;
+  idDelete: number;
   categorySearch = '';
   nameSearch = '';
   authorSearch = '';
-  bookList: Book [] = [];
-  categoryList: Category [] = [];
   number: number;
   indexPagination = 0;
   totalPage: string[];
@@ -36,7 +39,7 @@ export class HomeComponent implements OnInit {
   displayPagination = 'inline-block';
 
   constructor(private title: Title, private bookService: BookService, private toastService: ToastrService) {
-    this.title.setTitle('Trang chủ');
+ this.title.setTitle('Danh sách các đầu sách ');
   }
 
   ngOnInit(): void {
@@ -130,5 +133,20 @@ export class HomeComponent implements OnInit {
         this.ngOnInit();
         break;
     }
+  }
+
+  openDelete(book: Book) {
+    this.nameDelete = book.bookName;
+    this.idDelete = book.id;
+  }
+
+  delete(idDelete: number) {
+    this.bookService.deleteBook(idDelete).subscribe(() => {
+      this.ngOnInit();
+      this.toastService.success('Xóa thành công', 'Thông báo', {
+        messageClass: 'center',
+        positionClass: 'toast-top-center'
+      });
+    });
   }
 }

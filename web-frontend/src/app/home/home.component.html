@@ -1,7 +1,6 @@
-<div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>
 
-<main id="main">
-  <!-- ======= quang cao======= -->
+<main id="top" id="main">
+  <!--quang cao -->
   <section id="about" class="about">
     <div id="carouselExampleInterval" class="carousel slide container" data-bs-ride="carousel">
       <div class="carousel-inner">
@@ -27,33 +26,76 @@
       </button>
     </div>
   </section>
-  <!-- ket thuc qung cao -->
-
-  <!-- ======= Sản phẩm bày bán ======= -->
+  <!-- ket thuc quang cao -->
+  <!--  tim kiem -->
+  <div class="container" data-aos="fade-up">
+    <form [formGroup]="searchForm" novalidate (ngSubmit)="searchBook()">
+      <div class="row" data-aos="zoom-in" data-aos-delay="100">
+        <div formGroupName="category" style="text-align: center" class="col-lg-3 col-md-4">
+          <select formControlName="categoryName" style="width: 100%;border:solid  #EBA850" class="form-control-lg">
+            <option value="" selected>Danh mục</option>
+            <option *ngFor="let category of categoryList"
+                    value="{{category.categoryName}}">{{category.categoryName}}</option>
+          </select>
+        </div>
+        <div style="text-align: center" class="col-lg-3 col-md-4">
+          <input formControlName="bookName" style="width: 100%;border:solid  #EBA850" type="search"
+                 class="form-control-lg "
+                 placeholder="Nhập tên sách">
+        </div>
+        <div style="text-align: center" class="col-lg-3 col-md-4">
+          <input formControlName="author" style="width: 100%;border:solid  #EBA850" type="search"
+                 class="form-control-lg"
+                 placeholder="Nhập tên tác giả">
+        </div>
+        <div style="text-align: center" class="col-lg-3 col-md-4">
+          <button type="submit" style="width: 100%;border:solid  #EBA850;border-radius: 200px;margin-top: 5px"
+                  class=" form-control-lg btn btn-outline-danger"
+                  (keyup.enter)="searchBook()">Tìm Kiếm
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <!--  ket thuc tim kiem -->
+  <!-- Sản phẩm bày bán -->
   <section id="why-us" class="why-us">
     <div class="container" data-aos="fade-up">
-      <h2 style="color: #EBA850"><label>Bán chạy nhất tháng này </label></h2>
       <div class="row">
-        <!--        Sản phẩm bán chạy nhất-->
-        <div class="content col-lg-4 ">
-          <a style="font-weight: 500" href="about.html" class="more-btn">Mua ngay</a>
+        <div class="col-lg-3 d-flex align-items-stretch">
+          <div class="content">
+            <div style="width: 100%">
+              <img src="../../assets/n5.jpg" alt="">
+            </div>
+            <h3 style="color: #EBA850;font-size: 30px;font-weight: 700">Tại sao nên đọc sách?</h3>
+            <p style="color: black">
+              Sách là nguồn tri thức vô hạn, giúp chúng ta có thể bổ sung kiến thức và nâng cao vốn hiểu biết của chính
+              mình. Ở sách, bạn có thể tìm tòi thêm về văn hoá - chính trị, kinh tế - xã hội, lịch sử hoặc đơn giản hơn
+              là phong cách sống,... Những điều tưởng chừng nhỏ nhặt nhất trong cuộc sống như cách nói lời cảm ơn, xin
+              lỗi cũng được truyền tải nhẹ nhàng và tinh tế qua những trang sách. Có thể nói, sách đóng vai trò “bổ trợ”
+              cho mọi hoạt động giáo dục về nhận thức và ý thức. Đây cũng là lý do chính người ta đưa văn hoá đọc vào
+              chương trình giáo dục mầm non, giúp thế hệ trẻ hình thành thói quen đọc sách ngay từ khi còn nhỏ.
+            </p>
+            <div class="text-center">
+              <a href="about.html" class="more-btn">Learn More <i class="bx bx-chevron-right"></i></a>
+            </div>
+          </div>
         </div>
-        <!--        kết thúc sản phẩm bán chạy nhất-->
         <!-- sản phẩm-->
-        <div class="col-lg-8 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
+        <div class="col-lg-9 d-flex align-items-stretch" data-aos="zoom-in" data-aos-delay="100">
           <div class="icon-boxes d-flex flex-column justify-content-center">
             <div class="row">
-              <!--              test-->
-              <div class="col-md-4 col-sm-6">
+              <!--sp test-->
+              <div *ngFor="let bookList of bookList" class="col-md-4 col-sm-6">
                 <div class="product-grid">
                   <div class="product-image">
                     <a href="#" class="image">
-                      <img class="pic-1" src="../../assets/14-ngay-kinh-hoang.jpg">
+                      <img class="pic-1" src="{{bookList.image}}">
                       <img class="pic-2" src="../../assets/nguoi-chet-de-da.jpg">
                     </a>
                     <span style="background-color: #EBA850" class="product-sale-label">sale!</span>
                     <ul class="social">
-                      <li><a routerLink="/detail" href="" data-tip="Quick View">
+                      <li><a [routerLink]="['/detail',bookList.id]" href="" data-tip="Quick View">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-eye" viewBox="0 0 16 16">
                           <path
@@ -71,223 +113,50 @@
                       </a></li>
                     </ul>
                     <div class="product-rating">
-                      <a style="text-decoration: none;color: #EBA850" class="add-to-cart" href="#"> Thêm vào giỏ </a>
+                      <a style="text-decoration: none;color: #EBA850" class="add-to-cart" href="#">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                             class="bi bi-cart-plus" viewBox="0 0 16 16">
+                          <path
+                            d="M9 5.5a.5.5 0 0 0-1 0V7H6.5a.5.5 0 0 0 0 1H8v1.5a.5.5 0 0 0 1 0V8h1.5a.5.5 0 0 0 0-1H9V5.5z"/>
+                          <path
+                            d="M.5 1a.5.5 0 0 0 0 1h1.11l.401 1.607 1.498 7.985A.5.5 0 0 0 4 12h1a2 2 0 1 0 0 4 2 2 0 0 0 0-4h7a2 2 0 1 0 0 4 2 2 0 0 0 0-4h1a.5.5 0 0 0 .491-.408l1.5-8A.5.5 0 0 0 14.5 3H2.89l-.405-1.621A.5.5 0 0 0 2 1H.5zm3.915 10L3.102 4h10.796l-1.313 7h-8.17zM6 14a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm7 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                      </a>
                     </div>
                   </div>
                   <div style="background-color: #f1f1f1;" class="product-content">
-                    <h3 class="title"><a href="#">ĐẮC NHÂN TÂM</a></h3>
-                    <div class="price">$20.00</div>
+                    <h3 class="title"><a href="#">{{bookList.author}}</a></h3>
+                    <div style="color: red" class="price">{{bookList.price|currency: 'đ'}}</div>
                   </div>
                 </div>
               </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="product-grid">
-                  <div class="product-image">
-                    <a href="#" class="image">
-                      <img class="pic-1" src="../../assets/bach-da-hanh.jpg">
-                      <img class="pic-2" src="../../assets/loi-canh-bao.jpg">
-                    </a>
-                    <span style="background-color: #EBA850" class="product-sale-label">sale!</span>
-                    <ul class="social">
-                      <li><a href="#" data-tip="Quick View">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-eye" viewBox="0 0 16 16">
-                          <path
-                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                          <path
-                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                        </svg>
-                      </a></li>
-                      <li><a href="#" data-tip="Add to wishlist">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-heart" viewBox="0 0 16 16">
-                          <path
-                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                        </svg>
-                      </a></li>
-                    </ul>
-                    <div class="product-rating">
-                      <a style="text-decoration: none;color: #EBA850" class="add-to-cart" href="#"> Thêm vào giỏ </a>
-                    </div>
-                  </div>
-                  <div style="background-color: #f1f1f1;" class="product-content">
-                    <h3 class="title"><a href="#">ĐẮC NHÂN TÂM</a></h3>
-                    <div class="price">$20.00</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="product-grid">
-                  <div class="product-image">
-                    <a href="#" class="image">
-                      <img class="pic-1" src="../../assets/tham-tu-arrowood.jpg">
-                      <img class="pic-2" src="../../assets/ce-sau-17-nam.jpg">
-                    </a>
-                    <span style="background-color: #EBA850" class="product-sale-label">sale!</span>
-                    <ul class="social">
-                      <li><a href="#" data-tip="Quick View">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-eye" viewBox="0 0 16 16">
-                          <path
-                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                          <path
-                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                        </svg>
-                      </a></li>
-                      <li><a href="#" data-tip="Add to wishlist">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-heart" viewBox="0 0 16 16">
-                          <path
-                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                        </svg>
-                      </a></li>
-                    </ul>
-                    <div class="product-rating">
-                      <a style="text-decoration: none;color: #EBA850" class="add-to-cart" href="#"> Thêm vào giỏ </a>
-                    </div>
-                  </div>
-                  <div style="background-color: #f1f1f1;" class="product-content">
-                    <h3 class="title"><a href="#">ĐẮC NHÂN TÂM</a></h3>
-                    <div class="price">$20.00</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="product-grid">
-                  <div class="product-image">
-                    <a href="#" class="image">
-                      <img class="pic-1" src="../../assets/goc-phan-tu.jpg">
-                      <img class="pic-2" src="../../assets/MRD3HIGI.jpg">
-                    </a>
-                    <span style="background-color: #EBA850" class="product-sale-label">sale!</span>
-                    <ul class="social">
-                      <li><a href="#" data-tip="Quick View">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-eye" viewBox="0 0 16 16">
-                          <path
-                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                          <path
-                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                        </svg>
-                      </a></li>
-                      <li><a href="#" data-tip="Add to wishlist">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-heart" viewBox="0 0 16 16">
-                          <path
-                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                        </svg>
-                      </a></li>
-                    </ul>
-                    <div class="product-rating">
-                      <a style="text-decoration: none;color: #EBA850" class="add-to-cart" href="#"> <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3" viewBox="0 0 16 16">
-                        <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
-                      </svg> </a>
-                    </div>
-                  </div>
-                  <div style="background-color: #f1f1f1;" class="product-content">
-                    <h3 class="title"><a href="#">ĐẮC NHÂN TÂM</a></h3>
-                    <div class="price">$20.00</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="product-grid">
-                  <div class="product-image">
-                    <a href="#" class="image">
-                      <img class="pic-1" src="../../assets/loi-canh-bao.jpg">
-                      <img class="pic-2" src="../../assets/nguoi-chet-de-da.jpg">
-                    </a>
-                    <span style="background-color: #EBA850" class="product-sale-label">sale!</span>
-                    <ul class="social">
-                      <li><a href="#" data-tip="Quick View">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-eye" viewBox="0 0 16 16">
-                          <path
-                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                          <path
-                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                        </svg>
-                      </a></li>
-                      <li><a href="#" data-tip="Add to wishlist">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-heart" viewBox="0 0 16 16">
-                          <path
-                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                        </svg>
-                      </a></li>
-                    </ul>
-                    <div class="product-rating">
-                      <a style="text-decoration: none;color: #EBA850" class="add-to-cart" href="#"> Thêm vào giỏ </a>
-                    </div>
-                  </div>
-                  <div style="background-color: #f1f1f1;" class="product-content">
-                    <h3 class="title"><a href="#">ĐẮC NHÂN TÂM</a></h3>
-                    <div class="price">$20.00</div>
-                  </div>
-                </div>
-              </div>
-              <div class="col-md-4 col-sm-6">
-                <div class="product-grid">
-                  <div class="product-image">
-                    <a href="#" class="image">
-                      <img class="pic-1" src="../../assets/14-ngay-kinh-hoang.jpg">
-                      <img class="pic-2" src="../../assets/nguoi-thua-thu-14.jpg">
-                    </a>
-                    <span style="background-color: #EBA850" class="product-sale-label">sale!</span>
-                    <ul class="social">
-                      <li><a href="#" data-tip="Quick View">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-eye" viewBox="0 0 16 16">
-                          <path
-                            d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8zM1.173 8a13.133 13.133 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5c2.12 0 3.879 1.168 5.168 2.457A13.133 13.133 0 0 1 14.828 8c-.058.087-.122.183-.195.288-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5c-2.12 0-3.879-1.168-5.168-2.457A13.134 13.134 0 0 1 1.172 8z"/>
-                          <path
-                            d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
-                        </svg>
-                      </a></li>
-                      <li><a href="#" data-tip="Add to wishlist">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                             class="bi bi-heart" viewBox="0 0 16 16">
-                          <path
-                            d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-                        </svg>
-                      </a></li>
-                    </ul>
-                    <div class="product-rating">
-                      <a style="text-decoration: none;color: #EBA850" class="add-to-cart" href="#"> Thêm vào giỏ </a>
-                    </div>
-                  </div>
-                  <div style="background-color: #f1f1f1;" class="product-content">
-                    <h3 class="title"><a href="#">ĐẮC NHÂN TÂM</a></h3>
-                    <div class="price">$20.00</div>
-                  </div>
-                </div>
-              </div>
-              <!--              test-->
+              <!-- ket thuc test-->
             </div>
-            <!--            phân trang-->
+            <!--phan trang-->
             <div style="height: 50px;position: relative" class="container pagination-advertisement mb-3">
               <ul class="pagination justify-content-end" style="text-align: right">
                 <li>
-                  <select class="form-select">
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="15">15</option>
+                  <select class="form-select" (change)="totalElement($event)">
+                    <option value="6">6</option>
+                    <option value="12">12</option>
+                    <option value="18">18</option>
                     <option value="full">Tất Cả</option>
                   </select>
                 </li>
                 <li class="page-item">
-                  <span style="margin: 0 20px 0 20px"></span>
-                  <button style="background-color: #EBA850" type="button"
-                          class="btn">
+            <span style="margin: 0 20px 0 20px">{{pageSize * indexPagination + 1}}
+              - {{pageSize * indexPagination + numberOfElement}} trên {{totalElements}}</span>
+                  <button (click)="previousPage($event)" [ngStyle]="{'display':previousPageStyle}" type="button"
+                          class="btn btn-outline-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-chevron-left" viewBox="0 0 16 16">
                       <path fill-rule="evenodd"
                             d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
                     </svg>
                   </button>
-                  <button  style="margin-left: 10px;background-color: #EBA850"
+                  <button (click)="nextPage($event)" [ngStyle]="{'display':nextPageStyle}" style="margin-left: 10px"
                           type="button"
-                          class="btn">
+                          class="btn btn-outline-primary">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
                          class="bi bi-chevron-right" viewBox="0 0 16 16">
                       <path fill-rule="evenodd"
@@ -297,49 +166,14 @@
                 </li>
               </ul>
             </div>
-            <!--            kết thúc phân trang-->
+            <!-- kết thúc phân trang-->
           </div>
         </div>
-        <!--        kết thúc sản phẩm-->
+        <!-- kết thúc sản phẩm -->
       </div>
     </div>
   </section>
   <!-- Kết thúc sản phẩm bày bán -->
-
-  <!-- ======= Tùy chọn ?? ======= -->
-  <section id="features" class="features">
-    <div class="container" data-aos="fade-up">
-
-      <div class="row" data-aos="zoom-in" data-aos-delay="100">
-        <div class="col-lg-3 col-md-4">
-          <div class="icon-box">
-            <i class="ri-store-line" style="color: #ffbb2c;"></i>
-            <h3><a href="">Tác giả yêu thích</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-          <div class="icon-box">
-            <i class="ri-bar-chart-box-line" style="color: #5578ff;"></i>
-            <h3><a href="">Thể loại ăn khách nhất</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4 mt-md-0">
-          <div class="icon-box">
-            <i class="ri-calendar-todo-line" style="color: #e80368;"></i>
-            <h3><a href="">Doanh thu cao nhất</a></h3>
-          </div>
-        </div>
-        <div class="col-lg-3 col-md-4 mt-4 mt-lg-0">
-          <div class="icon-box">
-            <i class="ri-paint-brush-line" style="color: #e361ff;"></i>
-            <h3><a href="">Chuyện hay nhất</a></h3>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </section>
-  <!-- ======= Tùy chọn ?? ======= -->
 
   <!-- ====== Truện nổi bật ======= -->
   <section id="popular-courses" class="courses">
@@ -347,7 +181,7 @@
 
       <div class="section-title">
         <h2 style="color: red">Hot</h2>
-        <p style="color: #EBA850">Chuyện được mua nhiều nhất</p>
+        <p style="color: #EBA850">Truyện được mua nhiều nhất</p>
       </div>
 
       <div class="row" data-aos="zoom-in" data-aos-delay="100">
@@ -366,7 +200,7 @@
                 chuyện vui, chuyện buồn,…</p>
               <div class="trainer d-flex justify-content-between align-items-center">
                 <div class="trainer-profile d-flex align-items-center">
-                  <img src="assets/14-ngay-kinh-hoang.jpg" class="img-fluid" alt="">
+                  <img src="assets/n1.jpg" class="img-fluid" alt="">
                   <span>Antonio</span>
                 </div>
                 <div class="trainer-rank d-flex align-items-center">
@@ -393,7 +227,7 @@
                 chuyện vui, chuyện buồn,…</p>
               <div class="trainer d-flex justify-content-between align-items-center">
                 <div class="trainer-profile d-flex align-items-center">
-                  <img src="assets/nguoi-thua-thu-14.jpg" class="img-fluid" alt="">
+                  <img src="assets/n2.jpg" class="img-fluid" alt="">
                   <span>Lana</span>
                 </div>
                 <div class="trainer-rank d-flex align-items-center">
@@ -420,7 +254,7 @@
                 chuyện vui, chuyện buồn,….</p>
               <div class="trainer d-flex justify-content-between align-items-center">
                 <div class="trainer-profile d-flex align-items-center">
-                  <img src="assets/tham-tu-arrowood.jpg" class="img-fluid" alt="">
+                  <img src="assets/n4.jpg" class="img-fluid" alt="">
                   <span>Brandon</span>
                 </div>
                 <div class="trainer-rank d-flex align-items-center">
@@ -435,8 +269,7 @@
       </div>
     </div>
   </section>
-  <!-- Kết thúc truyện nổi bật--> -->
-
+  <!-- Kết thúc truyện nổi bật-->
   <!-- ======= Tác giả nổi bật ======= -->
   <section id="trainers" class="trainers">
     <div class="container" data-aos="fade-up">
@@ -578,6 +411,7 @@
     </div>
   </section>
   <!-- Kết thúc tác giả nổi bật -->
-
 </main><!-- End #main -->
-<div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
+<button style="border-radius: 20px" class="btn btn-outline-success">
+  <a href="#top">Back to top</a>
+</button>

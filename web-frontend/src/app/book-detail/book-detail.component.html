@@ -1,93 +1,106 @@
-<div class="vc_empty_space" style="height: 90px"><span class="vc_empty_space_inner"></span></div>
 
-<div class="container" style=" box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19)">
+<div class="container" style=" box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 20px">
   <!-- Open Content -->
-  <section class="bg-light">
+  <section  class="bg">
     <div class="container pb-5">
       <div class="row">
-<!--        img trái-->
+        <!--        img trái-->
         <div class="col-lg-5 mt-5">
           <div class="card mb-3">
-            <img class="card-img img-fluid" src="assets/s1.jpg" >
+            <img class="card-img img-fluid" src="{{image}}">
           </div>
         </div>
-<!--        img trái-->
+        <!--        img trái-->
         <!-- content phải -->
         <div class="col-lg-7 mt-5">
           <div class="card">
             <div class="card-body">
-              <h1 class="h2" style="color: #EBA850">Thiên Tài Bên Trái, Kẻ Điên Bên Phải</h1>
+              <h1 class="h2" style="color: #EBA850">{{name}}</h1>
               <ul class="list-inline">
                 <li class="list-inline-item w-25">
                   <p>Mã Sản Phẩm: </p>
                 </li>
                 <li class="list-inline-item w-50">
-                  <p class="text-muted"><strong>8976421365484998</strong></p>
+                  <p class="text-muted"><strong>{{codeBook}}</strong></p>
                 </li>
                 <li class="list-inline-item w-25">
                   <p>Tác Giả: </p>
                 </li>
                 <li class="list-inline-item w-50">
-                  <p class="text-muted"><strong>Nguyễn Văn A</strong></p>
+                  <p class="text-muted"><strong>{{author}}</strong></p>
                 </li>
                 <li class="list-inline-item w-25">
                   <p>Nhà Xuất Bản: </p>
                 </li>
                 <li class="list-inline-item w-50">
-                  <p class="text-muted"><strong>Kim Đồng</strong></p>
+                  <p class="text-muted"><strong>{{company}}</strong></p>
                 </li>
                 <li class="list-inline-item w-25">
                   <p>Số Trang: </p>
                 </li>
                 <li class="list-inline-item w-50">
-                  <p class="text-muted"><strong>200</strong></p>
+                  <p class="text-muted"><strong>{{totalPages}}</strong></p>
                 </li>
                 <li class="list-inline-item w-25">
                   <p>Kích Thước: </p>
                 </li>
                 <li class="list-inline-item w-50">
-                  <p class="text-muted"><strong>14 x 20 cm</strong></p>
+                  <p class="text-muted"><strong>{{size}}</strong></p>
                 </li>
                 <li class="list-inline-item w-25">
                   <p>Ngày Phát Hành: </p>
                 </li>
                 <li class="list-inline-item w-50">
-                  <p class="text-muted"><strong>10 / 09 / 2022</strong></p>
+                  <p class="text-muted"><strong>{{releaseDate|date:'dd/MM/yyyy'}}</strong></p>
                 </li>
               </ul>
 
               <p>Giới Thiệu:</p>
-              <p style="color: black">NẾU MỘT NGÀY ANH THẤY TÔI ĐIÊN, THỰC RA CHÍNH LÀ ANH ĐIÊN ĐẤY!</p>
-              <p style="color: black">Hỡi những con người đang oằn mình trong cuộc sống, bạn biết gì về thế giới của mình? Là vô vàn thứ lý
-                thuyết được các bậc vĩ nhân kiểm chứng, là luật lệ, là cả nghìn thứ sự thật bọc trong cái lốt hiển
-                nhiên, hay những triết lý cứng nhắc của cuộc đời?
+              <!--              <p style="color: black">NẾU MỘT NGÀY ANH THẤY TÔI ĐIÊN, THỰC RA CHÍNH LÀ ANH ĐIÊN ĐẤY!</p>-->
+              <p style="color: black">{{description}}
               </p>
               <div>
                 <input type="hidden" name="product-title" value="Activewear">
                 <div class="row">
                   <div class="col-auto">
-                    <p class="h3 py-2 text-danger">127.00 đ</p>
+                    <p class="h3 py-2 text-danger">{{price|currency:'đ'}}</p>
                     <ul class="list-inline pb-3">
                       <li style="color: #EBA850" class="list-inline-item text-right">
                         Quantity:
                         <input type="hidden" name="product-quanity" id="product-quanity" value="1">
                       </li>
-                      <li class="list-inline-item"><button style="background-color: #EBA850" class="btn" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash" viewBox="0 0 16 16">
-                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                      </svg></button></li>
-                      <li class="list-inline-item"><button class="btn btn-success badge bg-secondary" >1</button></li>
-                      <li class="list-inline-item"><button style="background-color: #EBA850" class="btn" ><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus" viewBox="0 0 16 16">
-                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                      </svg></button></li>
+                      <li class="list-inline-item">
+                        <button style="background-color: #EBA850" class="btn">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                               class="bi bi-dash" viewBox="0 0 16 16">
+                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
+                          </svg>
+                        </button>
+                      </li>
+                      <li class="list-inline-item">
+                        <button style="font-size: 30px" class="btn">1</button>
+                      </li>
+                      <li class="list-inline-item">
+                        <button style="background-color: #EBA850" class="btn">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                               class="bi bi-plus" viewBox="0 0 16 16">
+                            <path
+                              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
+                          </svg>
+                        </button>
+                      </li>
                     </ul>
                   </div>
                 </div>
                 <div class="row pb-3">
                   <div class="col d-grid">
-                    <button type="submit" style="background-color: #EBA850" class="btn" name="submit" value="buy">Mua ngay</button>
+                    <button type="submit" style="background-color: #EBA850" class="btn" name="submit" value="buy">Mua
+                      ngay
+                    </button>
                   </div>
                   <div class="col d-grid">
-                    <button type="submit"  style="background-color: #EBA850" class="btn" name="submit" value="addtocard">Thêm vào giỏ hàng
+                    <button type="submit" style="background-color: #EBA850" class="btn" name="submit" value="addtocard">
+                      Thêm vào giỏ hàng
                     </button>
                   </div>
                 </div>
@@ -100,4 +113,3 @@
   </section>
   <!-- Close Content phải -->
 </div>
-<div class="vc_empty_space" style="height: 30px"><span class="vc_empty_space_inner"></span></div>
