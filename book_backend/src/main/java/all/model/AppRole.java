@@ -11,15 +11,17 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Role {
+public class AppRole {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
+
     private String roleName;
 
-    @JsonBackReference
-    @OneToMany(mappedBy = "Role")
+    @Column(columnDefinition = "BIT(1) DEFAULT 0")
+    private Boolean isDeleted;
+
+    @OneToMany(mappedBy = "appRole")
     @JsonIgnore
     private List<UserRole> userRoles;
 }
-

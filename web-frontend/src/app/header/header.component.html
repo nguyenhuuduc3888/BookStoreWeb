@@ -11,10 +11,10 @@
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
         <li><a routerLink="contact" href="">Liên hệ</a></li>
-        <li class="dropdown"><a href="#"><span>Quản lý </span> <i class="bi bi-chevron-down"></i></a>
+        <li *ngIf="['ROLE_ADMIN'].indexOf(role)!==-1" class="dropdown"><a href="#"><span>Quản lý </span> <i
+          class="bi bi-chevron-down"></i></a>
           <ul>
             <li><a routerLink="/manager" href="">Dánh sách sản phẩm</a></li>
-            <li><a href="#">Thống kê</a></li>
             <li><a routerLink="/list/contact" href="">Thông tin liên hệ</a></li>
           </ul>
         </li>
@@ -24,11 +24,52 @@
             <path
               d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
           </svg>
+          <sup style="font-size: 15px ;color: red" >{{totalQuantity}}</sup>
         </a></li>
+
+
+        <li class="nav-item dropdown" [hidden]="isLoggedIn">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                 class="bi bi-person-circle d-inline-block" viewBox="0 0 16 16">
+              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+              <path fill-rule="evenodd"
+                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+            </svg>
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-item">
+              <a class="nav-link" routerLink="../login">Đăng nhập</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item dropdown" [hidden]="!isLoggedIn">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
+            <!--                 class="bi bi-person-circle d-inline-block" viewBox="0 0 16 16">-->
+            <!--              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>-->
+            <!--              <path fill-rule="evenodd"-->
+            <!--                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>-->
+            <!--            </svg>-->
+            <img style="width: 30px;height: 30px" src="https://cdn-icons-gif.flaticon.com/7307/7307807.gif" alt="">
+          </a>
+          <ul class="dropdown-menu">
+            <li class="nav-item">
+              <a href="" class="nav-link" (click)="logOut()">Đăng xuất</a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-item" style="padding: 8px">
+              <span class="nav-item me-2 text-success" [hidden]="!isLoggedIn">
+                Tài khoản: <span style="color: #EBA850">{{username}}</span>
+              </span>
+          <span class="nav-item me-2 text-secondary" [hidden]="isLoggedIn">Chưa Đăng Nhập</span>
+        </li>
       </ul>
       <i class="bi bi-list mobile-nav-toggle"></i>
     </nav>
-    <a routerLink="/login" href="" class="get-started-btn">Đăng nhập</a>
   </div>
 </header>
-<div class="vc_empty_space" style="height: 100px"><span class="vc_empty_space_inner"></span></div>
+<div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>

@@ -5,6 +5,9 @@ import {Book} from '../model/book';
 import {Category} from '../model/category';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
+import Swal from 'sweetalert2';
+import {Router} from '@angular/router';
+import {TokenStorageService} from '../service/token-storage.service';
 
 @Component({
   selector: 'app-home',
@@ -12,6 +15,13 @@ import {Title} from '@angular/platform-browser';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  roles: string[] = [];
+
+  constructor(private router: Router, private title: Title, private bookService: BookService,
+              private tokenStorageService: TokenStorageService) {
+    this.title.setTitle('Trang chủ');
+  }
+
   searchForm: FormGroup = new FormGroup({
     author: new FormControl(''),
     bookName: new FormControl(''),
@@ -19,7 +29,6 @@ export class HomeComponent implements OnInit {
       categoryName: new FormControl('')
     })
   });
-
   categorySearch = '';
   nameSearch = '';
   authorSearch = '';
@@ -34,15 +43,64 @@ export class HomeComponent implements OnInit {
   previousPageStyle = 'inline-block';
   nextPageStyle = 'inline-block';
   displayPagination = 'inline-block';
-
-  constructor(private title: Title, private bookService: BookService, private toastService: ToastrService) {
-    this.title.setTitle('Trang chủ');
-  }
+  id: any;
+  image: any;
+  price: any;
+  author: any;
+  name: any;
+  cart: any = this.bookService.getCart();
 
   ngOnInit(): void {
     this.searchBook();
     this.getListSearch();
     this.getCategoryList();
+    setTimeout(function() {
+      this.book.changeData({
+        quantity: this.book.getCartTotalQuantity()
+      });
+    }, 1);
+    this.roles = this.tokenStorageService.getUser().roles;
+  }
+
+  addToCart(book: any) {
+    const idx = this.cart.findIndex((item: any) => {
+      // tslint:disable-next-line:triple-equals
+      return item.id == book.id;
+    });
+    if (idx >= 0) {
+      this.cart[idx].quantity += 1;
+    } else {
+      const cartItem: any = {
+        image: book.image,
+        id: book.id,
+        author: book.author,
+        name: book.bookName,
+        price: book.price,
+        quantity: 1,
+      };
+      this.cart.push(cartItem);
+    }
+    if (this.roles.length > 0) {
+      this.bookService.saveCart(this.cart);
+      // gọi phương thức khi có sự thay đổi giỏ hàng
+      this.bookService.changeData({
+        quantity: this.bookService.getCartTotalQuantity()
+      });
+      Swal.fire({
+        title: 'Thêm vào giỏ thành công',
+        icon: 'success',
+        timer: 1200,
+        confirmButtonColor: '#EBA850'
+      });
+    } else {
+      Swal.fire({
+        title: 'Bạn chưa đăng nhập',
+        icon: 'error',
+        timer: 1200,
+        confirmButtonColor: '#EBA850'
+      });
+    }
+
   }
 
   getCategoryList() {
@@ -56,6 +114,12 @@ export class HomeComponent implements OnInit {
     this.bookService.getListAndSearch(this.indexPagination, this.categorySearch, this.authorSearch,
       this.nameSearch, this.pageSize).subscribe((data?: any) => {
       if (data === null) {
+        Swal.fire({
+          title: 'Không tìm thấy',
+          icon: 'warning',
+          timer: 1200,
+          confirmButtonColor: '#EBA850'
+        });
         this.totalPage = new Array(0);
         this.bookList = [];
         this.displayPagination = 'none';

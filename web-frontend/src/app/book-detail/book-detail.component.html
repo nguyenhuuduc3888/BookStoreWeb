@@ -1,7 +1,6 @@
-
 <div class="container" style=" box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 20px">
   <!-- Open Content -->
-  <section  class="bg">
+  <section class="bg">
     <div class="container pb-5">
       <div class="row">
         <!--        img trái-->
@@ -64,43 +63,20 @@
                 <div class="row">
                   <div class="col-auto">
                     <p class="h3 py-2 text-danger">{{price|currency:'đ'}}</p>
-                    <ul class="list-inline pb-3">
-                      <li style="color: #EBA850" class="list-inline-item text-right">
-                        Quantity:
-                        <input type="hidden" name="product-quanity" id="product-quanity" value="1">
-                      </li>
-                      <li class="list-inline-item">
-                        <button style="background-color: #EBA850" class="btn">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                               class="bi bi-dash" viewBox="0 0 16 16">
-                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8z"/>
-                          </svg>
-                        </button>
-                      </li>
-                      <li class="list-inline-item">
-                        <button style="font-size: 30px" class="btn">1</button>
-                      </li>
-                      <li class="list-inline-item">
-                        <button style="background-color: #EBA850" class="btn">
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                               class="bi bi-plus" viewBox="0 0 16 16">
-                            <path
-                              d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z"/>
-                          </svg>
-                        </button>
-                      </li>
-                    </ul>
                   </div>
                 </div>
                 <div class="row pb-3">
                   <div class="col d-grid">
-                    <button type="submit" style="background-color: #EBA850" class="btn" name="submit" value="buy">Mua
-                      ngay
+                    <button  (click)="addToCart(book)" type=" submit
+                    " style="background-color: #EBA850" class="btn btn-outline-success" name="submit" value="addtocard">
+                      Thêm vào giỏ hàng
                     </button>
                   </div>
+                </div>  <div class="row pb-3">
                   <div class="col d-grid">
-                    <button type="submit" style="background-color: #EBA850" class="btn" name="submit" value="addtocard">
-                      Thêm vào giỏ hàng
+                    <button routerLink="" type=" submit
+                    " style="background-color: #EBA850" class="btn btn-outline-success" name="submit" value="addtocard">
+                     Tiếp tục mua hàng
                     </button>
                   </div>
                 </div>

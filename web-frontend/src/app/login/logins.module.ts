@@ -4,6 +4,7 @@ import { LoginsRoutingModule } from './logins-routing.module';
 import { RestigerComponent } from './restiger.component';
 import {LoginComponent} from './login.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import {ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -11,9 +12,10 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
     RestigerComponent,
     ForgotPasswordComponent
   ],
-  imports: [
-    CommonModule,
-    LoginsRoutingModule,
-  ]
+    imports: [
+        CommonModule,
+        LoginsRoutingModule,
+        ReactiveFormsModule,
+    ]
 })
 export class LoginsModule { }

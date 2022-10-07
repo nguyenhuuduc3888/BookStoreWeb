@@ -5,6 +5,7 @@ import {Book} from '../../model/book';
 import {Category} from '../../model/category';
 import {FormControl, FormGroup} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-book-manager-book',
@@ -37,15 +38,20 @@ export class BookManagerComponent implements OnInit {
   previousPageStyle = 'inline-block';
   nextPageStyle = 'inline-block';
   displayPagination = 'inline-block';
+  totalQuantity = 0;
 
-  constructor(private title: Title, private bookService: BookService, private toastService: ToastrService) {
- this.title.setTitle('Danh sách các đầu sách ');
+  constructor(private title: Title, private bookService: BookService) {
+    this.title.setTitle('Danh sách các đầu sách ');
   }
 
   ngOnInit(): void {
     this.searchBook();
     this.getListSearch();
     this.getCategoryList();
+    this.bookService.getData.subscribe((res: any) => {
+      this.totalQuantity = res.quantity;
+    });
+
   }
 
   getCategoryList() {
@@ -59,6 +65,16 @@ export class BookManagerComponent implements OnInit {
     this.bookService.getListAndSearch(this.indexPagination, this.categorySearch, this.authorSearch,
       this.nameSearch, this.pageSize).subscribe((data?: any) => {
       if (data === null) {
+        Swal.fire({
+          title: 'Thông Báo!',
+          text: 'Không tìm thấy',
+          color: '#EBA850',
+          icon: 'warning',
+          timer: 1200,
+          iconColor: ' #EBA850',
+          confirmButtonColor: '#EBA850',
+          confirmButtonAriaLabel: '#EBA850',
+        });
         this.totalPage = new Array(0);
         this.bookList = [];
         this.displayPagination = 'none';
@@ -143,9 +159,13 @@ export class BookManagerComponent implements OnInit {
   delete(idDelete: number) {
     this.bookService.deleteBook(idDelete).subscribe(() => {
       this.ngOnInit();
-      this.toastService.success('Xóa thành công', 'Thông báo', {
-        messageClass: 'center',
-        positionClass: 'toast-top-center'
+      Swal.fire({
+        title: 'Thông Báo!',
+        text: 'Xoá thành công',
+        color: '#EBA850',
+        icon: 'success',
+        confirmButtonText: 'Tắt thông báo',
+        iconColor: ' #EBA850',
       });
     });
   }

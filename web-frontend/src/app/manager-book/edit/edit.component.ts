@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
 import {finalize} from 'rxjs/operators';
 import {AngularFireStorage} from '@angular/fire/storage';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-edit',
@@ -83,7 +84,14 @@ export class EditComponent implements OnInit {
           this.bookService.update(this.id, this.bookForm.value).subscribe(
             () => {
               this.router.navigateByUrl('/manager');
-              this.toastrService.success('Sửa  thông tin sách thành công');
+              Swal.fire({
+                title: 'Thông Báo!',
+                text: 'Sửa thành công',
+                color: '#EBA850',
+                icon: 'success',
+                timer: 1200,
+                iconColor: ' #EBA850',
+              });
             },
             error => {
               this.toastrService.error('Sửa thất bại');

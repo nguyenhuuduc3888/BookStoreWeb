@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {Title} from '@angular/platform-browser';
 import {AngularFireStorage} from '@angular/fire/storage';
 import {finalize} from 'rxjs/operators';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-create',
@@ -62,7 +63,14 @@ export class CreateComponent implements OnInit {
           this.bookService.save(this.bookForm.value).subscribe(
             () => {
               this.router.navigateByUrl('/manager');
-              this.toastrService.success('Thêm sách thành công');
+              Swal.fire({
+                title: 'Thông Báo!',
+                text: 'Thêm mới thành công',
+                color: '#EBA850',
+                icon: 'success',
+                timer: 1200,
+                iconColor: ' #EBA850',
+              });
             },
             error => {
               this.toastrService.error('Thất bại');

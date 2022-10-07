@@ -5,6 +5,7 @@ import {Book} from '../../model/book';
 import {Category} from '../../model/category';
 import {ToastrService} from 'ngx-toastr';
 import {Title} from '@angular/platform-browser';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-list',
@@ -112,8 +113,12 @@ export class ListComponent implements OnInit {
   delete(idDelete: number) {
     this.contactService.delete(idDelete).subscribe(() => {
       this.ngOnInit();
-      this.toastService.success('Xóa thành công', '--Đã thực hiện--', {
-        timeOut: 2000, progressBar: false,
+      Swal.fire({
+        title: 'Xoá liên hệ thành công',
+        color: '#EBA850',
+        icon: 'success',
+        timer: 1200,
+        confirmButtonColor: '#EBA850',
       });
     });
   }

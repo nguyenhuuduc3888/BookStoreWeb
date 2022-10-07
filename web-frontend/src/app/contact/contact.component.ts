@@ -1,11 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ContactService} from '../service/contact.service';
 import {ToastrService} from 'ngx-toastr';
-import {BookService} from '../service/book.service';
 import {Router} from '@angular/router';
-import {Category} from '../model/category';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Title} from '@angular/platform-browser';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-contact',
@@ -34,8 +33,12 @@ export class ContactComponent implements OnInit {
     const book = this.contactForm.value;
     this.contactService.save(book).subscribe(() => {
       this.contactForm.reset();
-      this.toastService.success('Thêm mới thành công', '--Đã thực hện--', {
-        timeOut: 2000, progressBar: false
+      Swal.fire({
+        title: 'Gởi liên hệ thành công',
+        color: '#EBA850',
+        icon: 'success',
+        timer: 1600,
+        confirmButtonColor: '#EBA850',
       });
       this.router.navigate(['']);
     }, err => {

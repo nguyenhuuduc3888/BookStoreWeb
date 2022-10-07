@@ -5,7 +5,8 @@
   height: 1px;
   background: #eee;
 }
-.img{
-  background-image: url("../../assets/Ảnh minh họa (3).png")!important;
+
+.img {
+  background-image: url("../../assets/Ảnh minh họa (3).png") !important;
   background-repeat: no-repeat;
 }

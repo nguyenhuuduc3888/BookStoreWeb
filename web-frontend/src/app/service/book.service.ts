@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
-import {Observable} from 'rxjs';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {Book} from '../model/book';
 import {Category} from '../model/category';
 
@@ -13,6 +13,18 @@ const API_URL = `${environment.apiUrl}`;
 export class BookService {
 
   constructor(private httpClient: HttpClient) {
+  }
+
+// những dữ liệu sẻ được gởi đi
+  private data = new BehaviorSubject({
+    totalQuantity: 0
+  });
+  // nhận dữ lieu từ component khác
+  getData = this.data.asObservable();
+
+  // lấy dữ liệu từ component hiện tại
+  changeData(data: any) {
+    this.data.next(data);
   }
 
   getListCategory(): Observable<Category[]> {
@@ -38,5 +50,42 @@ export class BookService {
 
   deleteBook(id: number): Observable<Book> {
     return this.httpClient.delete<Book>(`${API_URL}/book/delete/${id}`);
+  }
+
+  getCart() {
+    const cartJson = sessionStorage.getItem('cart');
+    if (cartJson) {
+      return JSON.parse(cartJson);
+    } else {
+      return [];
+    }
+  }
+
+  saveCart(cart: any) {
+    const cartJson = JSON.stringify(cart);
+    sessionStorage.setItem('cart', cartJson);
+  }
+
+  getCartTotalQuantity() {
+    const cart = this.getCart();
+    let total = 0;
+    cart.forEach((item: any) => {
+      total += item.quantity;
+    });
+    return total;
+  }
+
+  getCartTotalMany() {
+    const cart = this.getCart();
+    let total = 0;
+    cart.forEach((item: any) => {
+      total += item.price * item.quantity;
+    });
+    return total;
+  }
+
+  getTotalBook() {
+    const total = this.getCartTotalQuantity();
+    return total;
   }
 }

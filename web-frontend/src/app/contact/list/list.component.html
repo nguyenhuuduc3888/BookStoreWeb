@@ -1,7 +1,8 @@
+<div class="vc_empty_space" style="height: 70px"><span class="vc_empty_space_inner"></span></div>
 
 <div class="container">
   <div class="row">
-    <table style="text-align: center" class="table text-secondary">
+    <table style="text-align: left" class="table text-secondary">
       <thead style="background-color: #EBA850;font-size: 15px;color: white;border-radius: 10px">
       <th>Stt</th>
       <th>Tên</th>
@@ -14,7 +15,7 @@
       <tr *ngFor="let contact of contactList,index as i">
         <td>{{i + 1 + number * pageSize}}</td>
         <td>{{contact.name}}</td>
-        <td>{{contact.email}}</td>
+        <td><a style="text-decoration: none" href="{{contact.email}}">{{contact.email}}</a></td>
         <td>{{contact.phone}}</td>
         <td>{{contact.content}}</td>
         <td>
