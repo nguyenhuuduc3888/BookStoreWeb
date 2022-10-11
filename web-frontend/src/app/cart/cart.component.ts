@@ -13,12 +13,39 @@ import {render} from 'creditcardpayments/creditCardPayments';
 export class CartComponent implements OnInit {
   totalQuantity: number = this.book.getCartTotalQuantity();
   totalMoney: number = this.book.getCartTotalMany();
+  cart: any = [];
 
   constructor(private title: Title, private router: Router, private book: BookService) {
     this.title.setTitle('GIỏ hàng');
   }
 
-  cart: any = [];
+  paypal() {
+    document.getElementById('paypal').innerHTML = '<div id="btnPayPal"></div>';
+    if (this.totalMoney > 0) {
+      render({
+        id: '#paypal',
+        currency: 'USD',
+        value: String((this.totalMoney / 23000).toFixed(2)),
+        onApprove: (details) => {
+          Swal.fire({
+            title: 'Thanh toán thành công',
+            icon: 'success',
+            iconColor: ' #EBA850',
+            timer: 2000
+          });
+          this.cart = [];
+          this.book.saveCart(this.cart);
+        }
+      });
+    } else {
+      Swal.fire({
+        title: 'Giỏ hàng trống',
+        icon: 'success',
+        iconColor: ' #EBA850',
+        timer: 2000
+      });
+    }
+  }
 
   ngOnInit(): void {
     this.cart = this.book.getCart();
@@ -27,20 +54,7 @@ export class CartComponent implements OnInit {
         quantity: this.book.getCartTotalQuantity()
       });
     }, 1);
-    render({
-      id: '#paypal',
-      currency: 'VND',
-      value: this.totalMoney.toString(),
-      onApprove: (details) => {
-        Swal.fire({
-          title: 'Thanh toán',
-          icon: 'success',
-          iconColor: ' #EBA850',
-          timer: 2000
-        });
-        this.cart = [];
-      }
-    });
+    this.paypal();
   }
 
   subTotal(cart: any) {

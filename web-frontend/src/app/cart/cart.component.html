@@ -34,7 +34,7 @@
               </svg>
             </button>
           </div>
-          <div style="color: red" class="col"> {{subTotal(cart)|currency:' '}} vnđ</div>
+          <div style="color: red" class="col"> {{subTotal(cart)|currency:'VND'}}</div>
           <div class="col">
             <button (click)="delete(i)" style="margin-bottom: 20px" class="btn btn-outline-danger">Xóa</button>
           </div>
@@ -68,11 +68,10 @@
       </form>
       <div class="row" style="border-top: 1px solid rgba(0,0,0,.1); padding: 2vh 0;">
         <div class="col">Tổng tiền:</div>
-        <div class="col text-right" style="color: red">{{totalMoney|currency:' '}} vnđ</div>
+        <div class="col text-right" style="color: red">{{totalMoney|currency:'VND'}} </div>
       </div>
       <div class="col">Thanh toán:</div>
-      <div class="row" id="paypal">
-
+      <div id="paypal">
       </div>
     </div>
   </div>
@@ -83,3 +82,4 @@
     <a routerLink="" style="color: #EBA850">click về trang chủ</a>
     để mua hàng</h3>
 </div>
+

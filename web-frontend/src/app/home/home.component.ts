@@ -16,7 +16,6 @@ import {TokenStorageService} from '../service/token-storage.service';
 })
 export class HomeComponent implements OnInit {
   roles: string[] = [];
-
   constructor(private router: Router, private title: Title, private bookService: BookService,
               private tokenStorageService: TokenStorageService) {
     this.title.setTitle('Trang chủ');
@@ -89,14 +88,14 @@ export class HomeComponent implements OnInit {
       Swal.fire({
         title: 'Thêm vào giỏ thành công',
         icon: 'success',
-        timer: 1200,
+        timer: 800,
         confirmButtonColor: '#EBA850'
       });
     } else {
       Swal.fire({
         title: 'Bạn chưa đăng nhập',
         icon: 'error',
-        timer: 1200,
+        timer: 1000,
         confirmButtonColor: '#EBA850'
       });
     }
@@ -115,7 +114,7 @@ export class HomeComponent implements OnInit {
       this.nameSearch, this.pageSize).subscribe((data?: any) => {
       if (data === null) {
         Swal.fire({
-          title: 'Không tìm thấy',
+          title: 'Không có kết quả nào phù hợp',
           icon: 'warning',
           timer: 1200,
           confirmButtonColor: '#EBA850'

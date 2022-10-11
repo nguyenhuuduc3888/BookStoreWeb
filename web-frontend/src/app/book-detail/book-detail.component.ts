@@ -26,6 +26,7 @@ export class BookDetailComponent implements OnInit {
   cart: any = this.bookService.getCart();
   book: Book;
   roles: string[] = [];
+  role: string;
 
   constructor(private bookService: BookService,
               private activatedRoute: ActivatedRoute,
@@ -37,6 +38,8 @@ export class BookDetailComponent implements OnInit {
       this.getDetail(this.id);
       console.log(this.id);
     });
+    this.role = this.tokenStorageService.getUser().roles[0];
+
   }
 
   ngOnInit(): void {
