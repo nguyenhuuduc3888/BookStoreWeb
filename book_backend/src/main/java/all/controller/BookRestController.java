@@ -1,9 +1,11 @@
 package all.controller;
 
+import all.model.AppUser;
 import all.model.Book;
 import all.model.Category;
 import all.service.IBookService;
 import all.service.ICategoryService;
+import all.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,8 +25,19 @@ public class BookRestController {
     IBookService bookService;
     @Autowired
     ICategoryService categoryService;
+    @Autowired
+    IUserService userService;
+
+    @GetMapping("/user")
+    public ResponseEntity<List<AppUser>> getInfor() {
+        List<AppUser> users = userService.findAll();
+        users.get(0);
+        users.get(1);
+        return new ResponseEntity<>(users, HttpStatus.OK);
+    }
 
     @GetMapping("/list")
+
     public ResponseEntity<List<Book>> findAll() {
         List<Book> books = bookService.findAll();
         return new ResponseEntity<>(books, HttpStatus.OK);

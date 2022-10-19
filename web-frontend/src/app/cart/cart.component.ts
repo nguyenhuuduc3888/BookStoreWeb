@@ -11,50 +11,41 @@ import {render} from 'creditcardpayments/creditCardPayments';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
-  totalQuantity: number = this.book.getCartTotalQuantity();
-  totalMoney: number = this.book.getCartTotalMany();
+  totalQuantity: number = this.bookService.getCartTotalQuantity();
+  totalMoney: number = this.bookService.getCartTotalMany();
   cart: any = [];
 
-  constructor(private title: Title, private router: Router, private book: BookService) {
+  constructor(private title: Title, private router: Router, private bookService: BookService) {
     this.title.setTitle('GIỏ hàng');
   }
 
-  paypal() {
-    document.getElementById('paypal').innerHTML = '<div id="btnPayPal"></div>';
-    if (this.totalMoney > 0) {
-      render({
-        id: '#paypal',
-        currency: 'USD',
-        value: String((this.totalMoney / 23000).toFixed(2)),
-        onApprove: (details) => {
-          Swal.fire({
-            title: 'Thanh toán thành công',
-            icon: 'success',
-            iconColor: ' #EBA850',
-            timer: 2000
-          });
-          this.cart = [];
-          this.book.saveCart(this.cart);
-        }
-      });
-    } else {
-      Swal.fire({
-        title: 'Giỏ hàng trống',
-        icon: 'success',
-        iconColor: ' #EBA850',
-        timer: 2000
-      });
-    }
-  }
-
   ngOnInit(): void {
-    this.cart = this.book.getCart();
+    this.cart = this.bookService.getCart();
     setTimeout(function() {
       this.book.changeData({
         quantity: this.book.getCartTotalQuantity()
       });
     }, 1);
-    this.paypal();
+  }
+
+  payment() {
+    render({
+      id: '#paypal',
+      currency: 'USD',
+      value: String((this.totalMoney / 23000).toFixed(2)),
+      onApprove: (details) => {
+        Swal.fire({
+          title: 'Thanh toán thành công',
+          icon: 'success',
+          iconColor: ' #EBA850',
+        });
+        this.cart = [];
+        this.bookService.saveCart(this.cart);
+        this.bookService.changeData({
+          quantity: this.bookService.getCartTotalQuantity()
+        });
+      }
+    });
   }
 
   subTotal(cart: any) {
@@ -67,11 +58,11 @@ export class CartComponent implements OnInit {
     newQuantity = newQuantity <= 100 ? newQuantity : 100;
     ev.target.value = newQuantity;
     this.cart[idx].quantity = ev.target.value;
-    this.book.saveCart(this.cart);
-    this.totalMoney = this.book.getCartTotalMany();
-    this.totalQuantity = this.book.getCartTotalQuantity();
-    this.book.changeData({
-      quantity: this.book.getCartTotalQuantity()
+    this.bookService.saveCart(this.cart);
+    this.totalMoney = this.bookService.getCartTotalMany();
+    this.totalQuantity = this.bookService.getCartTotalQuantity();
+    this.bookService.changeData({
+      quantity: this.bookService.getCartTotalQuantity()
     });
   }
 
@@ -81,11 +72,11 @@ export class CartComponent implements OnInit {
     newQuantity = newQuantity > 0 ? newQuantity : 1;
     newQuantity = newQuantity <= 100 ? newQuantity : 100;
     this.cart[idx].quantity = newQuantity;
-    this.book.saveCart(this.cart);
-    this.totalMoney = this.book.getCartTotalMany();
-    this.totalQuantity = this.book.getCartTotalQuantity();
-    this.book.changeData({
-      quantity: this.book.getCartTotalQuantity()
+    this.bookService.saveCart(this.cart);
+    this.totalMoney = this.bookService.getCartTotalMany();
+    this.totalQuantity = this.bookService.getCartTotalQuantity();
+    this.bookService.changeData({
+      quantity: this.bookService.getCartTotalQuantity()
     });
   }
 
@@ -94,11 +85,11 @@ export class CartComponent implements OnInit {
     let newQuantity = parseInt(quantity) + 1;
     newQuantity = newQuantity > 0 ? newQuantity : 1;
     this.cart[idx].quantity = newQuantity;
-    this.book.saveCart(this.cart);
-    this.totalMoney = this.book.getCartTotalMany();
-    this.totalQuantity = this.book.getCartTotalQuantity();
-    this.book.changeData({
-      quantity: this.book.getCartTotalQuantity()
+    this.bookService.saveCart(this.cart);
+    this.totalMoney = this.bookService.getCartTotalMany();
+    this.totalQuantity = this.bookService.getCartTotalQuantity();
+    this.bookService.changeData({
+      quantity: this.bookService.getCartTotalQuantity()
     });
   }
 
@@ -128,9 +119,9 @@ export class CartComponent implements OnInit {
           'success'
         );
         _this.cart.splice(i, 1);
-        _this.book.saveCart(this.cart);
-        this.book.changeData({
-          quantity: this.book.getCartTotalQuantity()
+        _this.bookService.saveCart(this.cart);
+        this.bookService.changeData({
+          quantity: this.bookService.getCartTotalQuantity()
         });
       } else if (
         /* Read more about handling dismissals below */
@@ -170,8 +161,8 @@ export class CartComponent implements OnInit {
         );
         sessionStorage.clear();
         this.cart = [];
-        this.book.changeData({
-          quantity: this.book.getCartTotalQuantity()
+        this.bookService.changeData({
+          quantity: this.bookService.getCartTotalQuantity()
         });
       } else if (
         /* Read more about handling dismissals below */

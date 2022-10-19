@@ -160,7 +160,7 @@
                   </div>
                   <div style="background-color: #f1f1f1" class="product-content">
                     <h3 class="title"><a href="#"><span>Tác giả: </span>{{bookList.author}}</a></h3>
-                    <div style="color: red"><span>Giá: </span>{{bookList.price|currency: 'VND'}}</div>
+                    <div style="color: red"><span>Giá: </span>{{bookList.price|currency: ' ': ' ': '5.0'}} VNĐ</div>
                   </div>
                 </div>
               </div>
@@ -226,7 +226,7 @@
               <div class="course-content">
                 <div class="d-flex justify-content-between align-items-center mb-3">
                   <h4>Top {{i + 1}}</h4>
-                  <p style="color: red" class="price">{{books.price|currency:'VND'}}</p>
+                  <p style="color: red" class="price">{{books.price|currency: ' ': ' ': '5.0'}} VNĐ</p>
                 </div>
 
                 <h3><a href="course-details.html">{{books.bookName}}</a></h3>

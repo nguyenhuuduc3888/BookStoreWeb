@@ -3,6 +3,8 @@ import {BookService} from '../service/book.service';
 import {TokenStorageService} from '../service/token-storage.service';
 import {ShareService} from '../service/share.service';
 import Swal from 'sweetalert2';
+import {AppUser} from '../model/app-user';
+import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +17,8 @@ export class HeaderComponent implements OnInit {
   role: string;
   isLoggedIn = false;
   totalQuantity?: any;
+  users: AppUser[] = [];
+
 
   constructor(private tokenStorageService: TokenStorageService,
               private shareService: ShareService, private book: BookService) {
@@ -48,6 +52,18 @@ export class HeaderComponent implements OnInit {
       icon: 'success',
       timer: 1200,
       confirmButtonColor: '#EBA850',
+    });
+  }
+
+  viewInfor() {
+    this.book.getInfor().subscribe(data => {
+      this.username = this.tokenStorageService.getUser().username;
+      if (this.username === 'duc1997') {
+        this.users = data.slice(0, 1);
+      }
+      if (this.username === 'khachhang') {
+        this.users = data.splice(1, 1);
+      }
     });
   }
 

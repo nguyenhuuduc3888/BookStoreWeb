@@ -18,13 +18,14 @@
             <li><a routerLink="/list/contact" href="">Thông tin liên hệ</a></li>
           </ul>
         </li>
-        <li><a  routerLink="/cart" href="">
-          <svg  *ngIf="['ROLE_USER'].indexOf(role)!==-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart3"
+        <li><a routerLink="/cart" href="">
+          <svg *ngIf="['ROLE_USER'].indexOf(role)!==-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+               fill="currentColor" class="bi bi-cart3"
                viewBox="0 0 16 16">
             <path
               d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .49.598l-1 5a.5.5 0 0 1-.465.401l-9.397.472L4.415 11H13a.5.5 0 0 1 0 1H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM3.102 4l.84 4.479 9.144-.459L13.89 4H3.102zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
           </svg>
-          <sup style="font-size: 15px ;color: red" >{{totalQuantity}}</sup>
+          <sup style="font-size: 15px ;color: red">{{totalQuantity}}</sup>
         </a></li>
 
 
@@ -46,23 +47,22 @@
 
         <li class="nav-item dropdown" [hidden]="!isLoggedIn">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <!--            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"-->
-            <!--                 class="bi bi-person-circle d-inline-block" viewBox="0 0 16 16">-->
-            <!--              <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>-->
-            <!--              <path fill-rule="evenodd"-->
-            <!--                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>-->
-            <!--            </svg>-->
             <img style="width: 30px;height: 30px" src="https://cdn-icons-gif.flaticon.com/7307/7307807.gif" alt="">
           </a>
           <ul class="dropdown-menu">
             <li class="nav-item">
+              <a href="" class="nav-link" (click)="viewInfor()" data-bs-toggle="modal"
+                 data-bs-target="#staticBackdrop">Xem chi tiết</a>
+            </li>
+            <li class="nav-item">
               <a href="" class="nav-link" (click)="logOut()">Đăng xuất</a>
             </li>
+
           </ul>
         </li>
 
         <li class="nav-item" style="padding: 8px">
-              <span class="nav-item me-2 text-success" [hidden]="!isLoggedIn">
+              <span class="nav-item me-2 " [hidden]="!isLoggedIn" >
                 Tài khoản: <span style="color: #EBA850">{{username}}</span>
               </span>
           <span class="nav-item me-2 text-secondary" [hidden]="isLoggedIn">Chưa Đăng Nhập</span>
@@ -73,3 +73,27 @@
   </div>
 </header>
 <div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
+     tabindex="-1"
+     aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel" style="color: #EBA850">Thông tin đăng nhập</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" *ngFor="let user of users">
+        <p><span style="color: #EBA850">Tên đăng nhập:</span> {{user.username}}</p>
+        <p><span style="color: #EBA850">Tên đầy đủ:</span> {{user.name}}</p>
+        <p><span style="color: #EBA850">Địa chỉ:</span> {{user.address}}</p>
+        <p><span style="color: #EBA850">Email:</span> {{user.email}}</p>
+        <p><span style="color: #EBA850">SĐT:</span> {{user.phone}}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #EBA850">Đóng
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

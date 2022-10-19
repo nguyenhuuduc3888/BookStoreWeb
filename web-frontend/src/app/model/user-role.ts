@@ -1,4 +1,7 @@
 export interface UserRole {
   id?: number;
-  isDeleted?: boolean;
+  name?: string;
+  phone?: number;
+  address?: string;
+  mail?: string;
 }

@@ -62,10 +62,11 @@
                 <input type="hidden" name="product-title" value="Activewear">
                 <div class="row">
                   <div class="col-auto">
-                    <p class="h3 py-2 text-danger">{{price|currency:'VND'}}</p>
+                    <p class="h3 py-2 text-danger">{{price|currency: ' ': ' ': '5.0'}} VNĐ</p>
                   </div>
                 </div>
-                <div class="row pb-3">
+                <div class="row d-flex">
+                <div class="col-6 pb-3">
                   <div class="col d-grid">
                     <button (click)="addToCart(book)" type=" submit
                     " style="background-color: #EBA850" class="btn btn-outline-success" name="submit" value="addtocard">
@@ -73,13 +74,14 @@
                     </button>
                   </div>
                 </div>
-                <div class="row pb-3">
+                <div class="col-6 pb-3">
                   <div class="col d-grid">
                     <button routerLink="" type=" submit
                     " style="background-color: #EBA850" class="btn btn-outline-success" name="submit" value="addtocard">
                       Về  trang chủ
                     </button>
                   </div>
+                </div>
                 </div>
               </div>
             </div>
