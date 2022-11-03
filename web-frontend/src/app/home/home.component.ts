@@ -16,6 +16,7 @@ import {TokenStorageService} from '../service/token-storage.service';
 })
 export class HomeComponent implements OnInit {
   roles: string[] = [];
+
   constructor(private router: Router, private title: Title, private bookService: BookService,
               private tokenStorageService: TokenStorageService) {
     this.title.setTitle('Trang chủ');
@@ -99,7 +100,6 @@ export class HomeComponent implements OnInit {
         confirmButtonColor: '#EBA850'
       });
     }
-
   }
 
   getCategoryList() {
@@ -108,6 +108,7 @@ export class HomeComponent implements OnInit {
       console.log(this.categoryList + ' danh mục');
     });
   }
+
 
   getListSearch() {
     this.bookService.getListAndSearch(this.indexPagination, this.categorySearch, this.authorSearch,
@@ -124,11 +125,10 @@ export class HomeComponent implements OnInit {
         this.displayPagination = 'none';
       } else {
         this.number = data?.number;
-        console.log(this.number);
         this.pageSize = data?.size;
         this.numberOfElement = data?.numberOfElements;
         this.bookList = data?.content;
-        console.log(this.bookList + ' ok');
+        this.totalPage = new Array(+data.totalPages);
         this.totalElements = data?.totalElements;
       }
       this.checkPreviousAndNext();
@@ -148,13 +148,13 @@ export class HomeComponent implements OnInit {
   previousPage(event: any) {
     event.preventDefault();
     this.indexPagination--;
-    this.ngOnInit();
+    this.getListSearch();
   }
 
   nextPage(event: any) {
     event.preventDefault();
     this.indexPagination++;
-    this.ngOnInit();
+    this.getListSearch();
   }
 
   checkPreviousAndNext() {
@@ -175,22 +175,22 @@ export class HomeComponent implements OnInit {
       case '6':
         this.pageSize = 6;
         this.indexPagination = 0;
-        this.ngOnInit();
+        this.getListSearch();
         break;
       case '12':
         this.pageSize = 12;
         this.indexPagination = 0;
-        this.ngOnInit();
+        this.getListSearch();
         break;
       case '18':
         this.pageSize = 18;
         this.indexPagination = 0;
-        this.ngOnInit();
+        this.getListSearch();
         break;
       case 'full':
         this.pageSize = this.totalElements;
         this.indexPagination = 0;
-        this.ngOnInit();
+        this.getListSearch();
         break;
     }
   }

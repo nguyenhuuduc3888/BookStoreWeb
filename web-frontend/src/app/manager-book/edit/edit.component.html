@@ -14,7 +14,8 @@ class="container-fluid">
                    aria-label=".form-control-lg example" formControlName="id">
             <div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
             <div>
-              <input class="form-control form-control-lg" type="text" placeholder="Mã sách"
+              <label>Mã sách</label>
+              <input class="form-control form-control-lg" type="text" placeholder="MS-123"
                      aria-label=".form-control-lg example" formControlName="codeBook">
             </div>
             <div style="color: red"
@@ -23,7 +24,9 @@ class="container-fluid">
             </div>
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <div>
-              <input class="form-control form-control-lg" type="text" placeholder="Tên sách"
+              <label>Tên sách</label>
+
+              <input class="form-control form-control-lg" type="text" placeholder="ABC"
                      aria-label=".form-control-lg example" formControlName="bookName">
             </div>
             <div style="color: red"
@@ -32,7 +35,9 @@ class="container-fluid">
             </div>
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <div>
-              <input class="form-control form-control-lg" type="text" placeholder="Giá"
+              <label>Giá</label>
+
+              <input class="form-control form-control-lg" type="text" placeholder="200.000?"
                      aria-label=".form-control-lg example" formControlName="price">
             </div>
             <div style="color: red"
@@ -41,7 +46,9 @@ class="container-fluid">
             </div>
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <div>
-              <input class="form-control form-control-lg" type="text" placeholder="Tác giả"
+              <label>Tác giả</label>
+
+              <input class="form-control form-control-lg" type="text" placeholder="ABC"
                      aria-label=".form-control-lg example" formControlName="author">
             </div>
             <div style="color: red"
@@ -49,9 +56,10 @@ class="container-fluid">
               Không được để trống
             </div>
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
-            <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <div>
-              <input class="form-control form-control-lg" type="text" placeholder="Số trang"
+              <label>Số trang</label>
+
+              <input class="form-control form-control-lg" type="text" placeholder="100?"
                      aria-label=".form-control-lg example" formControlName="totalPages">
             </div>
             <div style="color: red"
@@ -60,7 +68,9 @@ class="container-fluid">
             </div>
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <div>
-              <input class="form-control form-control-lg" type="text" placeholder="Kích thước"
+              <label>Kích thước</label>
+
+              <input class="form-control form-control-lg" type="text" placeholder="20x20"
                      aria-label=".form-control-lg example" formControlName="size">
             </div>
             <div style="color: red"
@@ -69,7 +79,9 @@ class="container-fluid">
             </div>
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <div>
-              <input class="form-control form-control-lg" type="text" placeholder="Nhà xuất bản"
+              <label>Nhà xuất bản</label>
+
+              <input class="form-control form-control-lg" type="text" placeholder="ABC"
                      aria-label=".form-control-lg example" formControlName="publicationCompany">
             </div>
             <div style="color: red"
@@ -78,7 +90,9 @@ class="container-fluid">
             </div>
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <div>
-              <input class="form-control form-control-lg" type="text" placeholder="Giới thiệu"
+              <label>Giới thiệu</label>
+
+              <input class="form-control form-control-lg" type="text" placeholder="ABC"
                      aria-label=".form-control-lg example" formControlName="introduce">
             </div>
             <div style="color: red"
@@ -87,6 +101,8 @@ class="container-fluid">
             </div>
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <div>
+              <label> Ngày phát hành</label>
+
               <input class="form-control form-control-lg" type="date" placeholder="Ngày phát hành"
                      aria-label=".form-control-lg example" formControlName="releaseDate">
             </div>
@@ -97,6 +113,7 @@ class="container-fluid">
             <div class="vc_empty_space" style="height: 10px"><span class="vc_empty_space_inner"></span></div>
             <!--select option-->
             <div>
+              <label>Chủ đề</label>
               <select class="form-control form-control-lg" type="text"
                       aria-label=".form-control-lg example" formControlName="category" [compareWith]="compare">
                 <option value="" disabled>--Chọn Danh Mục--</option>
@@ -109,6 +126,7 @@ class="container-fluid">
             </div>
             <div class="vc_empty_space" style="height: 20px"><span class="vc_empty_space_inner"></span></div>
             <div style="margin-top: 20px">
+              <label>Chọn ảnh</label>
               <input type="file" class="form-control" style="width: 48%" multiple (change)="selectFile($event)"
                      (change)="onFileSelected($event)">
             </div>

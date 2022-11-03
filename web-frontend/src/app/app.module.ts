@@ -15,6 +15,7 @@ import {environment} from '../environments/environment';
 import {HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
 import {BookManagerModule} from './manager-book/book-manager.module';
+import {StatisticalModule} from './statistical/statistical.module';
 
 @NgModule({
   declarations: [
@@ -32,13 +33,14 @@ import {BookManagerModule} from './manager-book/book-manager.module';
     BookDetailsModule,
     HttpClientModule,
     BookManagerModule,
+    StatisticalModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
     AngularFirestoreModule,
     ToastrModule.forRoot({
-        timeOut: 800,
-        progressBar: true,
-        onActivateTick: true,
-        enableHtml: true,
+      timeOut: 800,
+      progressBar: true,
+      onActivateTick: true,
+      enableHtml: true,
       messageClass: 'center',
       positionClass: 'toast-top-center'
     }),

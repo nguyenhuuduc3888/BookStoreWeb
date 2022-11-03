@@ -84,7 +84,7 @@ export class BookManagerComponent implements OnInit {
         this.pageSize = data?.size;
         this.numberOfElement = data?.numberOfElements;
         this.bookList = data?.content;
-        console.log(this.bookList + ' ok');
+        this.totalPage = new Array(+data.totalPages);
         this.totalElements = data?.totalElements;
       }
       this.checkPreviousAndNext();

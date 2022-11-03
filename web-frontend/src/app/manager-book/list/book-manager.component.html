@@ -1,6 +1,8 @@
 <div class="vc_empty_space" style="height: 70px"><span class="vc_empty_space_inner"></span></div>
 
 <div class="container">
+  <h1 style="color: #EBA850;text-align: center">Quản lý sách </h1>
+
   <!--Tìm kiếm-->
   <div class="row ">
     <form [formGroup]="searchForm" (ngSubmit)="searchBook()" novalidate>
@@ -16,7 +18,7 @@
                class="form-control">
         <input formControlName="bookName" type="search" style="border: solid #EBA850" placeholder="Tên sách"
                class="form-control">
-        <button class=" btn btn-outline-success" style="border-radius: 70px" (keyup.enter)="searchBook()"> Tìm</button>
+        <button class=" btn btn-outline-success"   style="border: solid #EBA850"  (keyup.enter)="searchBook()"> Tìm</button>
       </div>
     </form>
   </div>
@@ -26,9 +28,8 @@
   <div class="row">
     <!--Nut them-->
     <div class="col-1">
-      <button style="border-radius: 70px"  type="button" class=" btn btn-outline-success">
-        <a routerLink="/create" href="#" style="text-decoration: none;color: #EBA850">
-          Thêm </a>
+      <button routerLink="/create"   style="border: solid #EBA850"  type="button" class=" btn btn-outline-success">
+       Thêm
       </button>
     </div>
   </div>
@@ -53,16 +54,16 @@
         <td>{{books.bookName}}</td>
         <td>{{books.author}}</td>
         <td>{{books.category.categoryName}}</td>
-        <td style="color: red">{{books.price|currency :' '}} vnđ</td>
+        <td style="color: red">{{books.price|currency: ' ': ' ': '5.0'}} VNĐ</td>
         <td>
           <!--nút edit-->
-          <button style="border-radius: 70px"  [routerLink]="['/edit',books.id]" type="button" class="btn btn-outline-success">
+          <button  style="border: solid #EBA850" [routerLink]="['/edit',books.id]" type="button" class="btn btn-outline-success">
             <a>Sửa</a>
           </button>
         </td>
         <td>
           <!--nút xóa "-->
-          <button style="border-radius: 70px"  type="button" class="btn btn-outline-success"
+          <button  style="border: solid #EBA850"   type="button" class="btn btn-outline-danger"
                   data-bs-toggle="modal" data-bs-target="#exampleModal"
                   (click)="openDelete(books)">
             Xóa

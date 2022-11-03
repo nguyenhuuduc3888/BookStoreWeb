@@ -1,15 +1,15 @@
 <div class="vc_empty_space" style="height: 70px"><span class="vc_empty_space_inner"></span></div>
 
-<div *ngIf="cart.length>0" class="card">
+<div *ngIf="carts.length>0" class="card">
   <div class="row">
     <div class="col-md-8 cart">
       <div class="title">
         <div class="row">
           <div class="col"><h4 style="color: #EBA850"><b>Giỏ Hàng</b></h4></div>
-          <div class="col align-self-center text-right text-muted"><h3>{{cart.length}} sản phẩm</h3></div>
+          <div class="col align-self-center text-right text-muted"><h3>{{carts.length}} sản phẩm</h3></div>
         </div>
       </div>
-      <div *ngFor="let cart of cart,index as i" class="row border-top border-bottom">
+      <div *ngFor="let cart of carts,index as i" class="row border-top border-bottom">
         <div class="row main align-items-center">
           <div class="col-2"><img class="img-fluid" src="{{cart.image}}"></div>
           <div class="col">
@@ -54,7 +54,7 @@
       <hr>
       <div class="row">
         <div class="col" style="padding-left:0;">Tổng Sản Phẩm: <span
-          style="color: #EBA850;font-size: 20px;font-weight: 700">{{cart.length}}</span></div>
+          style="color: #EBA850;font-size: 20px;font-weight: 700">{{carts.length}}</span></div>
       </div>
       <div class="row">
         <div class="col" style="padding-left:0;">Tổng Số Lượng: <span
@@ -78,21 +78,21 @@
       </div>
       <div class="col">
         <button (click)="payment()" class="btn btn-outline-success" data-bs-toggle="modal"
-                data-bs-target="#staticBackdrop"> Thanh toán
+                data-bs-target="#staticBackdropt"> Thanh toán
         </button>
       </div>
     </div>
   </div>
 </div>
 
-<div style="text-align: center" *ngIf="cart.length==0">
+<div style="text-align: center" *ngIf="carts.length==0">
   <h3>Giỏ hàng trống
     <a routerLink="" style="color: #EBA850">click về trang chủ</a>
     để mua hàng</h3>
 </div>
 
 <!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+<div class="modal fade" id="staticBackdropt" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
      aria-labelledby="staticBackdropLabel" aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
@@ -105,7 +105,7 @@
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="close">Đóng</button>
       </div>
     </div>
   </div>

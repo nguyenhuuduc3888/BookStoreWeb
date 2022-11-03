@@ -9,7 +9,6 @@ import {ShareService} from '../service/share.service';
 import {CookieService} from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
 
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -28,7 +27,7 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private toastr: ToastrService,
               private shareService: ShareService,
-              private cookieService: CookieService) {
+              private cookieService: CookieService,) {
     this.title.setTitle('Đăng nhập');
   }
 
@@ -83,5 +82,26 @@ export class LoginComponent implements OnInit {
       });
     });
   }
+
+  // signInWithFB(): void {
+  //   this.social.authState.subscribe(user => {
+  //     console.log(user);
+  //     this.loginService.goLogin({username: user.email, password: user.id}).subscribe(() => {
+  //       setTimeout(() => {
+  //         this.router.navigateByUrl('').then(() => {
+  //           this.toastr.success('Đăng nhập thành công');
+  //           this.btnLoginStatus = true;
+  //           this.sendMessage();
+  //           console.log(user);
+  //         });
+  //       }, 2000);
+  //     });
+  //   }, error => {
+  //     this.toastr.error('Tên đăng nhập hoặc mật khẩu không đúng');
+  //     console.log('error login');
+  //     this.btnLoginStatus = true;
+  //   });
+  //   this.social.signIn(FacebookLoginProvider.PROVIDER_ID);
+  // }
 
 }

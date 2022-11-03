@@ -4,7 +4,6 @@ import {environment} from '../../environments/environment';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Book} from '../model/book';
 import {Category} from '../model/category';
-import {AppUser} from '../model/app-user';
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -23,13 +22,13 @@ export class BookService {
   // nhận dữ lieu từ component khác
   getData = this.data.asObservable();
 
-  getInfor(): Observable<AppUser[]> {
-    return this.httpClient.get<AppUser[]>(`${API_URL}/book/user`);
-  }
-
   // lấy dữ liệu từ component hiện tại
   changeData(data: any) {
     this.data.next(data);
+  }
+
+  findUserName(name: string): Observable<any> {
+    return this.httpClient.get<any>(API_URL + '/book/user-detail/' + name);
   }
 
   getListCategory(): Observable<Category[]> {
@@ -86,11 +85,6 @@ export class BookService {
     cart.forEach((item: any) => {
       total += item.price * item.quantity;
     });
-    return total;
-  }
-
-  getTotalBook() {
-    const total = this.getCartTotalQuantity();
     return total;
   }
 }

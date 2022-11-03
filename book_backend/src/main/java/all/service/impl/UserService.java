@@ -1,4 +1,5 @@
 package all.service.impl;
+
 import all.model.AppUser;
 import all.repository.UserRepository;
 import all.service.IUserService;
@@ -6,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.UnsupportedEncodingException;
@@ -21,8 +23,18 @@ public class UserService implements IUserService {
     private JavaMailSender javaMailSender;
 
     @Override
+    public List<AppUser> findAll() {
+        return userRepository.findAll();
+    }
+
+    @Override
     public AppUser findByName(String name) {
         return userRepository.findAppUserByName(name);
+    }
+
+    @Override
+    public AppUser findHistory(String username) {
+        return userRepository.findHistory(username);
     }
 
     @Override
@@ -57,10 +69,6 @@ public class UserService implements IUserService {
         javaMailSender.send(message);
     }
 
-    @Override
-    public List<AppUser> findAll() {
-        return userRepository.findAll();
-    }
 
     @Override
     public void save(AppUser appUser) {

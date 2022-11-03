@@ -70,36 +70,56 @@ export class EditComponent implements OnInit {
     return value.id === option.id;
   }
 
+
   submit() {
-    const nameImg = this.selectedImage.name;
-    const filePath = `book/${nameImg}`;
-    const fileRef = this.storage.ref(filePath);
-    this.storage.upload(filePath, this.selectedImage).snapshotChanges().pipe(
-      finalize(() => {
-        this.buttonAdvertisementStatus = false;
-        fileRef.getDownloadURL().subscribe((url) => {
-          this.bookForm.patchValue({image: url});
-          console.log(url);
-          console.log(this.bookForm.value);
-          this.bookService.update(this.id, this.bookForm.value).subscribe(
-            () => {
-              this.router.navigateByUrl('/manager');
-              Swal.fire({
-                title: 'Thông Báo!',
-                text: 'Sửa thành công',
-                color: '#EBA850',
-                icon: 'success',
-                timer: 1200,
-                iconColor: ' #EBA850',
-              });
-            },
-            error => {
-              this.toastrService.error('Sửa thất bại');
-            }
-          );
+    if (this.editImageState === false) {
+      this.bookService.update(this.id, this.bookForm.value).subscribe(
+        () => {
+          this.router.navigateByUrl('/manager');
+          Swal.fire({
+            title: 'Thông Báo!',
+            text: 'Sửa thành công',
+            color: '#EBA850',
+            icon: 'success',
+            timer: 1200,
+            iconColor: ' #EBA850',
+          });
+        },
+        error => {
+          this.toastrService.error('Sửa thất bại');
         });
-      })
-    ).subscribe();
+    } else {
+      const nameImg = this.selectedImage.name;
+      const filePath = `book/${nameImg}`;
+      const fileRef = this.storage.ref(filePath);
+      this.storage.upload(filePath, this.selectedImage).snapshotChanges().pipe(
+        finalize(() => {
+          this.buttonAdvertisementStatus = false;
+          fileRef.getDownloadURL().subscribe((url) => {
+            this.bookForm.patchValue({image: url});
+            console.log(url);
+            console.log(this.bookForm.value);
+            this.bookService.update(this.id, this.bookForm.value).subscribe(
+              () => {
+                this.router.navigateByUrl('/manager');
+                Swal.fire({
+                  title: 'Thông Báo!',
+                  text: 'Sửa thành công',
+                  color: '#EBA850',
+                  icon: 'success',
+                  timer: 1200,
+                  iconColor: ' #EBA850',
+                });
+              },
+              error => {
+                this.toastrService.error('Sửa thất bại');
+              }
+            );
+          });
+        })
+      ).subscribe();
+    }
+
   }
 
   onFileSelected(event) {

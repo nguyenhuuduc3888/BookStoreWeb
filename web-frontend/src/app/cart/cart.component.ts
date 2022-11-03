@@ -4,6 +4,8 @@ import Swal from 'sweetalert2';
 import {Router, Routes} from '@angular/router';
 import {BookService} from '../service/book.service';
 import {render} from 'creditcardpayments/creditCardPayments';
+import {CartDetailService} from '../service/cart-detail.service';
+import {TokenStorageService} from '../service/token-storage.service';
 
 @Component({
   selector: 'app-cart',
@@ -13,34 +15,48 @@ import {render} from 'creditcardpayments/creditCardPayments';
 export class CartComponent implements OnInit {
   totalQuantity: number = this.bookService.getCartTotalQuantity();
   totalMoney: number = this.bookService.getCartTotalMany();
-  cart: any = [];
+  carts: any = [];
 
-  constructor(private title: Title, private router: Router, private bookService: BookService) {
+  // tslint:disable-next-line:max-line-length
+  constructor(private tokenStorageService: TokenStorageService, private title: Title, private router: Router, private bookService: BookService, private cartDetailService: CartDetailService) {
     this.title.setTitle('GIỏ hàng');
   }
 
   ngOnInit(): void {
-    this.cart = this.bookService.getCart();
     setTimeout(function() {
       this.book.changeData({
         quantity: this.book.getCartTotalQuantity()
       });
     }, 1);
+    this.carts = this.bookService.getCart();
+    this.bookService.changeData({
+      quantity: this.bookService.getCartTotalQuantity()
+    });
   }
 
   payment() {
+    document.getElementById('paypal').innerHTML = '<div id="btnPayPal"></div>';
+    const username = this.tokenStorageService.getUser().username;
     render({
       id: '#paypal',
       currency: 'USD',
       value: String((this.totalMoney / 23000).toFixed(2)),
       onApprove: (details) => {
+        for (const item of this.carts) {
+          item.book = {
+            id: item.id
+          };
+        }
+        this.cartDetailService.saveCartDetail(username, this.carts).subscribe();
+        console.log(this.carts + ' luu xuong database');
         Swal.fire({
           title: 'Thanh toán thành công',
           icon: 'success',
           iconColor: ' #EBA850',
         });
-        this.cart = [];
-        this.bookService.saveCart(this.cart);
+        document.getElementById('close').click();
+        this.carts = [];
+        this.bookService.saveCart(this.carts);
         this.bookService.changeData({
           quantity: this.bookService.getCartTotalQuantity()
         });
@@ -57,8 +73,8 @@ export class CartComponent implements OnInit {
     newQuantity = newQuantity > 0 ? newQuantity : 1;
     newQuantity = newQuantity <= 100 ? newQuantity : 100;
     ev.target.value = newQuantity;
-    this.cart[idx].quantity = ev.target.value;
-    this.bookService.saveCart(this.cart);
+    this.carts[idx].quantity = ev.target.value;
+    this.bookService.saveCart(this.carts);
     this.totalMoney = this.bookService.getCartTotalMany();
     this.totalQuantity = this.bookService.getCartTotalQuantity();
     this.bookService.changeData({
@@ -71,8 +87,8 @@ export class CartComponent implements OnInit {
     let newQuantity = parseInt(quantity) - 1;
     newQuantity = newQuantity > 0 ? newQuantity : 1;
     newQuantity = newQuantity <= 100 ? newQuantity : 100;
-    this.cart[idx].quantity = newQuantity;
-    this.bookService.saveCart(this.cart);
+    this.carts[idx].quantity = newQuantity;
+    this.bookService.saveCart(this.carts);
     this.totalMoney = this.bookService.getCartTotalMany();
     this.totalQuantity = this.bookService.getCartTotalQuantity();
     this.bookService.changeData({
@@ -84,8 +100,8 @@ export class CartComponent implements OnInit {
     // tslint:disable-next-line:radix
     let newQuantity = parseInt(quantity) + 1;
     newQuantity = newQuantity > 0 ? newQuantity : 1;
-    this.cart[idx].quantity = newQuantity;
-    this.bookService.saveCart(this.cart);
+    this.carts[idx].quantity = newQuantity;
+    this.bookService.saveCart(this.carts);
     this.totalMoney = this.bookService.getCartTotalMany();
     this.totalQuantity = this.bookService.getCartTotalQuantity();
     this.bookService.changeData({
@@ -118,8 +134,8 @@ export class CartComponent implements OnInit {
           'Đã xóa thành công',
           'success'
         );
-        _this.cart.splice(i, 1);
-        _this.bookService.saveCart(this.cart);
+        _this.carts.splice(i, 1);
+        _this.bookService.saveCart(this.carts);
         this.bookService.changeData({
           quantity: this.bookService.getCartTotalQuantity()
         });
@@ -159,8 +175,8 @@ export class CartComponent implements OnInit {
           'Đã xóa thành công',
           'success'
         );
-        sessionStorage.clear();
-        this.cart = [];
+        this.carts = [];
+        this.bookService.saveCart(this.carts);
         this.bookService.changeData({
           quantity: this.bookService.getCartTotalQuantity()
         });

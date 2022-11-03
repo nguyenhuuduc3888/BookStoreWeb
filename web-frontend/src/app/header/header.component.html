@@ -10,16 +10,18 @@
       BookHouse</a></h5>
     <nav id="navbar" class="navbar order-last order-lg-0">
       <ul>
+
         <li><a routerLink="contact" href="" *ngIf="['ROLE_USER',''].indexOf(role)!==-1">Liên hệ</a></li>
         <li *ngIf="['ROLE_ADMIN'].indexOf(role)!==-1" class="dropdown"><a href="#"><span>Quản lý </span> <i
           class="bi bi-chevron-down"></i></a>
           <ul>
             <li><a routerLink="/manager" href="">Dánh sách sản phẩm</a></li>
             <li><a routerLink="/list/contact" href="">Thông tin liên hệ</a></li>
+            <li><a routerLink="/statistical" href="">Thống kê</a></li>
           </ul>
         </li>
         <li><a routerLink="/cart" href="">
-          <svg *ngIf="['ROLE_USER'].indexOf(role)!==-1" xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                fill="currentColor" class="bi bi-cart3"
                viewBox="0 0 16 16">
             <path
@@ -50,6 +52,8 @@
             <img style="width: 30px;height: 30px" src="https://cdn-icons-gif.flaticon.com/7307/7307807.gif" alt="">
           </a>
           <ul class="dropdown-menu">
+            <li><a routerLink="/cart/detail" href="">
+              Lịch sử mua hàng</a></li>
             <li class="nav-item">
               <a href="" class="nav-link" (click)="viewInfor()" data-bs-toggle="modal"
                  data-bs-target="#staticBackdrop">Xem chi tiết</a>
@@ -62,7 +66,7 @@
         </li>
 
         <li class="nav-item" style="padding: 8px">
-              <span class="nav-item me-2 " [hidden]="!isLoggedIn" >
+              <span class="nav-item me-2 " [hidden]="!isLoggedIn">
                 Tài khoản: <span style="color: #EBA850">{{username}}</span>
               </span>
           <span class="nav-item me-2 text-secondary" [hidden]="isLoggedIn">Chưa Đăng Nhập</span>
@@ -83,12 +87,12 @@
         <h5 class="modal-title" id="staticBackdropLabel" style="color: #EBA850">Thông tin đăng nhập</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
-      <div class="modal-body" *ngFor="let user of users">
-        <p><span style="color: #EBA850">Tên đăng nhập:</span> {{user.username}}</p>
-        <p><span style="color: #EBA850">Tên đầy đủ:</span> {{user.name}}</p>
-        <p><span style="color: #EBA850">Địa chỉ:</span> {{user.address}}</p>
-        <p><span style="color: #EBA850">Email:</span> {{user.email}}</p>
-        <p><span style="color: #EBA850">SĐT:</span> {{user.phone}}</p>
+      <div class="modal-body">
+        <p><span style="color: #EBA850">Tên đăng nhập:</span> {{users.username}}</p>
+        <p><span style="color: #EBA850">Tên đầy đủ:</span> {{users.name}}</p>
+        <p><span style="color: #EBA850">Địa chỉ:</span> {{users.address}}</p>
+        <p><span style="color: #EBA850">Email:</span> {{users.email}}</p>
+        <p><span style="color: #EBA850">SĐT:</span> {{users.phone}}</p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="background-color: #EBA850">Đóng

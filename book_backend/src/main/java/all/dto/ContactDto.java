@@ -1,4 +1,4 @@
-package web.dto;
+package all.dto;
 
 public class ContactDto {
 }

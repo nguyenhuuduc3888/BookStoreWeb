@@ -16,15 +16,12 @@ import java.util.Optional;
 @Transactional
 public interface UserRepository extends JpaRepository<AppUser, Integer> {
 
-    /**
-     * Create by SangNH
-     * Date: 08/09/2022
-     * query: search by name
-     *
-     * @param name
-     */
     @Query(value = "select * from app_user a where a.username = :name and is_deleted = 0", nativeQuery = true)
     AppUser findAppUserByName(@Param("name") String name);
+
+
+    @Query(value = "select app_user.* from app_user where app_user.username=:username", nativeQuery = true)
+    AppUser findHistory(@Param("username") String username);
 
     @Query(value = "SELECT username from app_user where username = ?1 and is_deleted = 0", nativeQuery = true)
     String existsByUserName(String username);

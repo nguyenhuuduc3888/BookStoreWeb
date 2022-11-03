@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   role: string;
   isLoggedIn = false;
   totalQuantity?: any;
-  users: AppUser[] = [];
+  users: any = [];
 
 
   constructor(private tokenStorageService: TokenStorageService,
@@ -33,9 +33,13 @@ export class HeaderComponent implements OnInit {
     this.book.getData.subscribe((res?: any) => {
       this.totalQuantity = res?.quantity;
     });
+    this.viewInfor();
   }
 
   loadHeader(): void {
+    if (this.tokenStorageService.getToken()) {
+      this.username = this.tokenStorageService.getUser().username;
+    }
     if (this.tokenStorageService.getToken()) {
       this.currentUser = this.tokenStorageService.getUser().username;
       this.role = this.tokenStorageService.getUser().roles[0];
@@ -56,15 +60,8 @@ export class HeaderComponent implements OnInit {
   }
 
   viewInfor() {
-    this.book.getInfor().subscribe(data => {
-      this.username = this.tokenStorageService.getUser().username;
-      if (this.username === 'duc1997') {
-        this.users = data.slice(0, 1);
-      }
-      if (this.username === 'khachhang') {
-        this.users = data.splice(1, 1);
-      }
+    this.book.findUserName(this.tokenStorageService.getUser().username).subscribe(data => {
+      this.users = data;
     });
   }
-
 }

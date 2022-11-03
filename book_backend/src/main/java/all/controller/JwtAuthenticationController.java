@@ -18,6 +18,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;
@@ -43,6 +45,39 @@ public class JwtAuthenticationController {
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
+//    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+//    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest,
+//                                                       HttpServletResponse response) throws Exception {
+//        final UserDetails userDetails = userDetailsService
+//                .loadUserByUsername(authenticationRequest.getUsername());
+//
+//        // Authentication
+//        authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
+//
+//        // Get roles list
+//        List<String> grantList = userDetails.getAuthorities().stream()
+//                .map(GrantedAuthority::getAuthority)
+//                .collect(Collectors.toList());
+//
+//        // Create token
+//        final String token = jwtTokenUtil.generateToken(userDetails);
+//
+//        createAuthorizationCookie(response, token);
+//        return ResponseEntity.ok(new JwtResponse(grantList, userDetails.getUsername()));
+//    }
+
+//    private void createAuthorizationCookie(HttpServletResponse response, String token) {
+//        Cookie refreshTokenCookie = new Cookie("Authorization", token);
+//        System.out.println(refreshTokenCookie.getValue());
+//        refreshTokenCookie.setHttpOnly(true);
+//        refreshTokenCookie.setSecure(false); //only allows HTTPS
+//        refreshTokenCookie.setPath("/");
+//        refreshTokenCookie.setMaxAge(3600);
+////        refreshTokenCookie.setDomain("google.com"); //restrict domain
+//        response.addCookie(refreshTokenCookie);
+//    }
+
 
     /**
      * Created by: SangNH

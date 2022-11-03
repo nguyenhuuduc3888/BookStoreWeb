@@ -1,11 +1,11 @@
 package all.controller;
 
-import all.model.AppUser;
-import all.model.Book;
-import all.model.Category;
-import all.service.IBookService;
-import all.service.ICategoryService;
-import all.service.IUserService;
+import all.dto.CartDetailDto;
+import all.dto.CartDto;
+import all.dto.HistoryDto;
+import all.model.*;
+import all.service.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +14,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -27,6 +30,10 @@ public class BookRestController {
     ICategoryService categoryService;
     @Autowired
     IUserService userService;
+    @Autowired
+    ICartService cartService;
+    @Autowired
+    ICartDetailService cartDetailService;
 
     @GetMapping("/user")
     public ResponseEntity<List<AppUser>> getInfor() {
@@ -36,8 +43,14 @@ public class BookRestController {
         return new ResponseEntity<>(users, HttpStatus.OK);
     }
 
-    @GetMapping("/list")
 
+    @GetMapping("/user-detail/{username}")
+    public ResponseEntity<AppUser> detail(@PathVariable String username) {
+        AppUser appUser = userService.findByName(username);
+        return new ResponseEntity<>(appUser, HttpStatus.OK);
+    }
+
+    @GetMapping("/list")
     public ResponseEntity<List<Book>> findAll() {
         List<Book> books = bookService.findAll();
         return new ResponseEntity<>(books, HttpStatus.OK);
@@ -75,14 +88,14 @@ public class BookRestController {
 
     @PostMapping("/create")
     public ResponseEntity<Book> create(@RequestBody Book book) {
-        book.setIsDeleted(false);
+        book.setDeleted(false);
         bookService.save(book);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<Book> update(@PathVariable int id, @RequestBody Book book) {
-        book.setIsDeleted(false);
+        book.setDeleted(false);
         book.setId(id);
         bookService.save(book);
         return new ResponseEntity<>(book, HttpStatus.OK);
@@ -92,5 +105,48 @@ public class BookRestController {
     public ResponseEntity<Book> deleteBook(@PathVariable int id) {
         bookService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @PostMapping("/save-cart/{username}")
+    public ResponseEntity<List<CartDetailDto>> saveCart(@PathVariable String username, @RequestBody List<CartDetailDto> cartDetails) {
+        AppUser appUser = userService.findByName(username);
+        Cart cart = new Cart();
+        cart.setCreateDate(LocalDate.now());
+        cart.setCreateTime(LocalTime.now());
+        cart.setUser(appUser);
+        cart.setDeleted(false);
+        cart = cartService.save(cart);
+        for (CartDetailDto item : cartDetails) {
+            item.setBook(bookService.finById(item.getBook().getId()));
+            CartDetail cartDetail = new CartDetail();
+            cartDetail.setCart(cart);
+            cartDetail.setBook(item.getBook());
+            cartDetail.setQuantity(item.getQuantity());
+            cartDetailService.save(cartDetail);
+        }
+        return new ResponseEntity<>(null, HttpStatus.CREATED);
+    }
+
+
+    @GetMapping("/history/{username}")
+    public ResponseEntity<HistoryDto> getHistory(@PathVariable String username) {
+        HistoryDto history = new HistoryDto();
+        AppUser appUser = userService.findHistory(username);
+        BeanUtils.copyProperties(appUser, history);
+        List<Cart> carts = cartService.findByAppUserId(history.getId());
+        List<CartDto> cartDtos = new LinkedList<>();
+        for (Cart cart : carts) {
+            cartDtos.add(new CartDto(cart.getId(), cart.getCreateDate().toString(), cart.getCreateTime().toString()));
+        }
+        history.setCarts(cartDtos);
+        for (CartDto item : history.getCarts()) {
+            List<CartDetail> cartDetails = cartDetailService.findCartDetail(item.getId());
+            List<CartDetailDto> cartDetailDtos = new LinkedList<>();
+            for (CartDetail cartDetail : cartDetails) {
+                cartDetailDtos.add(new CartDetailDto(cartDetail.getQuantity(), cartDetail.getBook()));
+            }
+            item.setCartDetails(cartDetailDtos);
+        }
+        return new ResponseEntity<>(history, HttpStatus.OK);
     }
 }
