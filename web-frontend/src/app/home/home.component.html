@@ -35,21 +35,21 @@
         <div style="text-align: center" class="col-lg-2 col-md-4">
         </div>
         <div formGroupName="category" style="text-align: center" class="col-lg-2 col-md-4">
-          <select formControlName="categoryName" style="width: 100%;border:solid  #EBA850" class="form-control-lg">
+          <select formControlName="categoryName" style="width: 100%;border:solid  #EBA850; text-transform: uppercase;" class="form-control-lg">
             <option value="" selected>Danh mục</option>
-            <option *ngFor="let category of categoryList"
+            <option style=" text-transform: uppercase;" *ngFor="let category of categoryList"
                     value="{{category.categoryName}}">{{category.categoryName}}</option>
           </select>
         </div>
         <div style="text-align: center" class="col-lg-2 col-md-4">
           <input formControlName="bookName" style="width: 100%;border:solid  #EBA850" type="search"
                  class="form-control-lg "
-                 placeholder="Tên sách">
+                 placeholder="TÊN SÁCH">
         </div>
         <div style="text-align: center" class="col-lg-2 col-md-4">
           <input formControlName="author" style="width: 100%;border:solid  #EBA850" type="search"
                  class="form-control-lg"
-                 placeholder="Tên tác giả">
+                 placeholder="TÊN TÁC GIẢ">
         </div>
         <div style="text-align: center" class="col-lg-1 col-md-4">
           <button type="submit" style="width: 100%;border:solid  #EBA850;border-radius: 10px;margin-top: 5px"
@@ -115,8 +115,8 @@
                             d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5zM4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0z"/>
                         </svg>
                       </a></li>
-                      <li ><a href="#" data-tip="Add to wishlist">
-                        <svg  xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                      <li><a href="#" data-tip="Add to wishlist">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                              class="bi bi-heart" viewBox="0 0 16 16">
                           <path
                             d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
@@ -219,7 +219,7 @@
       </div>
 
       <div class="row d-flex" data-aos="zoom-in" data-aos-delay="100">
-        <div *ngFor="let books of bookList,index as i" class="col-md-4 d-flex align-items-stretch">
+        <div *ngFor="let books of bookListTop6,index as i" class="col-md-4 d-flex align-items-stretch">
           <a href="" [routerLink]="['/detail',books.id]">
             <div class="course-item">
               <img src="{{books.image}}" alt="...">
@@ -229,16 +229,14 @@
                   <p style="color: red" class="price">{{books.price|currency: ' ': ' ': '5.0'}} VNĐ</p>
                 </div>
 
-                <h3><a href="course-details.html">{{books.bookName}}</a></h3>
+                <h3 style=" text-transform: uppercase;"><a href="course-details.html">{{books.bookName}}</a></h3>
                 <p>{{books.introduce}}</p>
                 <div class="trainer d-flex justify-content-between align-items-center">
                   <div style="font-size: 15px" class="trainer-profile d-flex align-items-center">
                     <p style="font-size: 30px">{{books.author}}</p>
                   </div>
                   <div class="trainer-rank d-flex align-items-center">
-                    <i class="bx bx-user"></i>&nbsp;50
-                    &nbsp;&nbsp;
-                    <i class="bx bx-heart"></i>&nbsp;65
+                    <label>Tổng đã bán: </label><h3 style="font-weight: 800;color: red">{{books.sumQuantity}}</h3>
                   </div>
                 </div>
               </div>

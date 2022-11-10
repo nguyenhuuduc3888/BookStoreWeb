@@ -1,0 +1,17 @@
+<div class="container" style="margin-top: 50px;">
+  <form class="example-form" [formGroup]="roomForm" (ngSubmit)="onFormSubmit(roomForm.value)">
+    <mat-form-field class="example-full-width mt-5" appearance="outline">
+      <label style="color: #eba850;margin-top: 2px" >Tên Phòng</label>
+      <input matInput placeholder="Nhập Tên Phòng" formControlName="roomname"
+             [errorStateMatcher]="matcher">
+      <mat-error>
+        <span *ngIf="!roomForm.get('roomname').valid && roomForm.get('roomname').touched">Vui Lòng Nhập Tên Phòng</span>
+      </mat-error>
+    </mat-form-field>
+    <div class="button-row mb-5">
+      <button  style="margin-top: 20px"  class="btn btn-outline-success" type="submit" [disabled]="!roomForm.valid" >
+        Lưu
+      </button>
+    </div>
+  </form>
+</div>

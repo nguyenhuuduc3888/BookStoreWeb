@@ -1,5 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Chart, registerables} from 'chart.js';
+import {Book} from '../model/book';
+import {FormControl, FormGroup} from '@angular/forms';
+import {BookService} from '../service/book.service';
 
 Chart.register(...registerables);
 
@@ -9,39 +12,73 @@ Chart.register(...registerables);
   styleUrls: ['./statistical.component.css']
 })
 export class StatisticalComponent implements OnInit {
+  statistic: Book[] = [];
+  myChart: any = {};
+  startDate: any;
+  endDate: any;
 
-  constructor() {
+  form: FormGroup = new FormGroup({
+    startDate: new FormControl(),
+    endDate: new FormControl()
+  });
+
+  constructor(private book: BookService) {
+    Chart.register(...registerables);
   }
 
+  getStatistic() {
+    this.book.getListSellingTop10(this.startDate, this.endDate).subscribe(value => {
+      this.statistic = value;
+      console.log(value);
+      const label = [];
+      const data = [];
+      for (let i = 0; i < this.statistic.length; i++) {
+        label[i] = this.statistic[i].name;
+        console.log(label[i]);
+        data[i] = this.statistic[i].sumQuantity;
+      }
+      this.myChart.destroy();
+      this.myChart = new Chart('myChart', {
+        type: 'bar',
+        data: {
+          labels: label,
+          datasets: [{
+            label: 'Số lượng mua',
+            data,
+            backgroundColor: [
+              '#EBA850'
+            ],
+            borderColor: [
+              '#EBA850',
+            ],
+            borderWidth: 1
+          }]
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+    });
+  }
+
+
   ngOnInit(): void {
-    const myChart = new Chart('myChart', {
+    this.myChart = new Chart('myChart', {
       type: 'bar',
       data: {
-        labels: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
+        labels: ['', '', '', '', '', ''],
         datasets: [{
-          label: '# 20.000.000vnđ',
-          data: [12, 19, 3, 5, 2, 3, 11, 12, 13, 14, 5, 15],
+          label: 'Số lượng mua',
+          data: [0, 0, 0, 0, 0, 0],
           backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)',
-            'rgba(255, 20, 132, 0.2)',
-            'rgba(54, 30, 235, 0.2)',
-            'rgba(255, 40, 86, 0.2)',
-            'rgba(75, 50, 192, 0.2)',
-            'rgba(153, 60, 255, 0.2)',
-            'rgba(255, 70, 64, 0.2)'
+            '#EBA850',
           ],
           borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
+            '#EBA850',
           ],
           borderWidth: 1
         }]
@@ -54,6 +91,12 @@ export class StatisticalComponent implements OnInit {
         }
       }
     });
+  }
+
+  submitForm() {
+    this.startDate = this.form.value.startDate;
+    this.endDate = this.form.value.endDate;
+    this.getStatistic();
   }
 
 }

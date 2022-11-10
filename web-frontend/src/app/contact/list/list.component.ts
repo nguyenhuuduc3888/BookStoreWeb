@@ -47,6 +47,7 @@ export class ListComponent implements OnInit {
         this.numberOfElement = data?.numberOfElements;
         this.contactList = data?.content;
         console.log(this.contactList + ' ok');
+        this.totalPage = new Array(+data.totalPages);
         this.totalElements = data?.totalElements;
       }
       this.checkPreviousAndNext();

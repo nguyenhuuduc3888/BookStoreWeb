@@ -12,7 +12,7 @@ import Swal from 'sweetalert2';
 export class ForgotPasswordComponent implements OnInit {
 
   constructor(private title: Title, private formBuilder: FormBuilder,
-              private authService: AuthService,) {
+              private authService: AuthService) {
     this.title.setTitle('Quên mật khẩu');
   }
   formGroup: FormGroup;

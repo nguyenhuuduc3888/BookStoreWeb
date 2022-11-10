@@ -33,6 +33,7 @@ export class HomeComponent implements OnInit {
   nameSearch = '';
   authorSearch = '';
   bookList: Book [] = [];
+  bookListTop6: Book [] = [];
   categoryList: Category [] = [];
   number: number;
   indexPagination = 0;
@@ -51,6 +52,7 @@ export class HomeComponent implements OnInit {
   cart: any = this.bookService.getCart();
 
   ngOnInit(): void {
+    this.getListTop6();
     this.searchBook();
     this.getListSearch();
     this.getCategoryList();
@@ -109,6 +111,12 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  getListTop6() {
+    this.bookService.getListBookTop6().subscribe((data?: any) => {
+      this.bookListTop6 = data;
+      console.log(this.bookListTop6 + ' Top 6');
+    });
+  }
 
   getListSearch() {
     this.bookService.getListAndSearch(this.indexPagination, this.categorySearch, this.authorSearch,

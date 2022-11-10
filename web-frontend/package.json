@@ -23,12 +23,16 @@
     "bootstrap": "^5.2.1",
     "bootstrap-icons": "^1.9.1",
     "chart.js": "^3.9.1",
+    "html2pdf.js": "^0.10.1",
     "creditcardpayments": "^1.0.3",
-    "firebase": "^8.0.1",
+    "firebase": "^7.0.0||^8.0.1",
     "ngx-toastr": "^12.1.0",
     "rxjs": "~6.5.4",
     "tslib": "^1.10.0",
-    "zone.js": "~0.10.2"
+    "zone.js": "~0.10.2",
+    "@angular/material": "^9.2.4",
+    "@angular/cdk": "^9.2.4",
+    "angularx-social-login": "^3.5.7"
   },
   "devDependencies": {
     "ngx-cookie-service": "^11.0.2",

@@ -3,6 +3,7 @@ package all.controller;
 import all.dto.CartDetailDto;
 import all.dto.CartDto;
 import all.dto.HistoryDto;
+import all.dto.StatisticalDto;
 import all.model.*;
 import all.service.*;
 import org.springframework.beans.BeanUtils;
@@ -34,6 +35,8 @@ public class BookRestController {
     ICartService cartService;
     @Autowired
     ICartDetailService cartDetailService;
+    @Autowired
+    IStatisticalService statisticalService;
 
     @GetMapping("/user")
     public ResponseEntity<List<AppUser>> getInfor() {
@@ -148,5 +151,30 @@ public class BookRestController {
             item.setCartDetails(cartDetailDtos);
         }
         return new ResponseEntity<>(history, HttpStatus.OK);
+    }
+
+    @GetMapping("/statistic/{startDate}/{endDate}")
+    public ResponseEntity<List<StatisticalDto>> getSellingBookTop10(@PathVariable String startDate, @PathVariable String endDate) {
+        List<StatisticalDto> statisticDto = statisticalService.getList(startDate, endDate);
+        if (statisticDto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(statisticDto, HttpStatus.OK);
+    }
+
+
+    @GetMapping("/top-6")
+    public ResponseEntity<List<StatisticalDto>> getListBookTop6() {
+        List<StatisticalDto> statisticDto = bookService.getListTop6();
+        if (statisticDto.isEmpty()) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        }
+        return new ResponseEntity<>(statisticDto, HttpStatus.OK);
+    }
+
+    @PostMapping("/facebook")
+    public ResponseEntity<Object> addUser(@RequestBody AppUser user) {
+        userService.save(user);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 }

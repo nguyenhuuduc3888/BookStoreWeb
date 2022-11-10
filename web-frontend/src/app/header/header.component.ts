@@ -3,8 +3,6 @@ import {BookService} from '../service/book.service';
 import {TokenStorageService} from '../service/token-storage.service';
 import {ShareService} from '../service/share.service';
 import Swal from 'sweetalert2';
-import {AppUser} from '../model/app-user';
-import {Observable} from 'rxjs';
 
 @Component({
   selector: 'app-header',

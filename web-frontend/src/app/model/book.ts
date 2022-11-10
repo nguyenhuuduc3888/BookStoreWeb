@@ -13,4 +13,6 @@ export interface Book {
   introduce?: string;
   releaseDate?: string;
   category?: Category;
+  sumQuantity?: number;
+  name?: string;
 }

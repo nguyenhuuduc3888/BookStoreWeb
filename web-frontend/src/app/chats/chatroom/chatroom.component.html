@@ -1,0 +1,127 @@
+<!--<div class="example-container mat-elevation-z8">-->
+<!--  <mat-drawer-container class="drawer-container">-->
+<!--    <mat-drawer mode="side" opened class="left-drawer">-->
+<!--      <div class="users-pane">-->
+<!--        <mat-card class="users-card" *ngFor="let user of users">-->
+<!--          <p style="color: #3ac162">Người Chát:</p>  <span>{{user.nickname}}</span>-->
+<!--        </mat-card>-->
+<!--        <button class="btn btn-outline-success" (click)="exitChat()">-->
+<!--          Đăng xuất-->
+<!--        </button>-->
+<!--      </div>-->
+<!--    </mat-drawer>-->
+<!--    <mat-drawer-content class="chat-pane">-->
+<!--      <div #chatcontent [scrollTop]="scrolltop" class="chat-content">-->
+<!--        <div class="message-box" *ngFor="let chat of chats">-->
+<!--          <div class="chat-status" text-center *ngIf="chat.type==='join'||chat.type==='exit';else message">-->
+<!--            <span class="chat-date">{{chat.date | date:'short'}}</span>-->
+<!--            <span class="chat-content-center">{{chat.message}}</span>-->
+<!--          </div>-->
+<!--          <ng-template #message>-->
+<!--            <div class="chat-message">-->
+<!--              <div class="right-bubble" [ngClass]="{'right-bubble': chat.nickname === nickname, 'left-bubble': chat.nickname !== nickname}">-->
+<!--                <span class="msg-name" *ngIf="chat.nickname === nickname">Tôi</span>-->
+<!--                <span class="msg-name" *ngIf="chat.nickname !== nickname">{{chat.nickname}}</span>-->
+<!--                <span class="msg-date"> at {{chat.date | date:'short'}}</span>-->
+<!--                <p text-wrap>{{chat.message}}</p>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </ng-template>-->
+<!--        </div>-->
+<!--      </div>-->
+<!--      <footer class="sticky-footer">-->
+<!--        <form class="message-form" [formGroup]="chatForm" (ngSubmit)="onFormSubmit(chatForm.value)">-->
+<!--          <mat-form-field class="message-form-field">-->
+<!--            <input matInput placeholder="Nhập tin nhắn" formControlName="message"-->
+<!--                   [errorStateMatcher]="matcher">-->
+<!--            <p>-->
+<!--              <span *ngIf="!chatForm.get('message').valid && chatForm.get('message').touched">Nhập tin nhắn</span>-->
+<!--            </p>-->
+<!--            <button class="btn btn-outline-success" type="submit" [disabled]="!chatForm.valid" mat-button matSuffix mat-icon-button aria-label="Gởi">-->
+<!--              Gởi-->
+<!--            </button>-->
+<!--          </mat-form-field>-->
+<!--        </form>-->
+<!--      </footer>-->
+<!--    </mat-drawer-content>-->
+<!--  </mat-drawer-container>-->
+<!--</div>-->
+<!--<div class="vc_empty_space" style="height: 500px"><span class="vc_empty_space_inner"></span></div>-->
+
+
+<div style="margin-top: 60px" class="container">
+  <h1 class=" text-center" style="color: #eba850">Phòng Chát</h1>
+  <div class="messaging">
+    <div class="inbox_msg">
+      <div class="inbox_people">
+        <div class="headind_srch">
+          <div class="recent_heading">
+            <button class="btn btn-outline-success" (click)="exitChat()">
+              Thoát khỏi phòng
+            </button>
+          </div>
+          <div class="srch_bar">
+            <div class="stylish-input-group">
+              <input type="text" class="search-bar" placeholder=" Đang Chat: {{users.length}}">
+              <span class="input-group-addon">
+                <button type="button"> <i class="fa fa-search" aria-hidden="true"></i> </button>
+                </span></div>
+          </div>
+        </div>
+        <!--        người chat-->
+        <div class="inbox_chat">
+          <div *ngFor="let user of users" class="chat_list active_chat">
+            <div class="chat_people">
+              <div class="chat_img"><img src="https://ptetutorials.com/images/user-profile.png" alt="sunil"></div>
+              <div class="chat_ib">
+                <h5>{{user.nickname}} <span style="color: #3ac162" class="chat_date">Online</span></h5>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--        kết thúc người chát-->
+      </div>
+      <div class="mesgs">
+        <div class="msg_history">
+          <div class="message-box" *ngFor="let chat of chats">
+            <div class="chat-status" text-center *ngIf="chat.type==='join'||chat.type==='exit';else message">
+              <span class="chat-date">{{chat.date | date:'short'}}</span>
+              <span class="chat-content-center">{{chat.message}}</span>
+            </div>
+            <ng-template #message>
+              <div class="chat-message">
+                <div class="right-bubble"
+                     [ngClass]="{'right-bubble': chat.nickname === nickname, 'left-bubble': chat.nickname !== nickname}">
+                  <span class="msg-name" *ngIf="chat.nickname === nickname">Tôi</span>
+                  <span class="msg-name" *ngIf="chat.nickname !== nickname">{{chat.nickname}}</span>
+                  <span style="margin-left: 5px" class="msg-date"> đã gởi lúc  {{chat.date | date:'short'}}</span>
+                  <p text-wrap style="color: black">{{chat.message}}</p>
+                </div>
+              </div>
+            </ng-template>
+          </div>
+        </div>
+        <div style="margin-top: 10px" class="type_msg">
+          <div class="input_msg_write">
+            <form [formGroup]="chatForm" (ngSubmit)="onFormSubmit(chatForm.value)">
+              <input type="text" class="write_msg" placeholder="Nhập tin nhắn" formControlName="message"/>
+              <p>
+                <span *ngIf="!chatForm.get('message').valid && chatForm.get('message').touched">Nhập tin nhắn</span>
+              </p>
+              <button type="submit" [disabled]="!chatForm.valid" class="msg_send_btn btn-outline-success"><i
+                class="fa fa-paper-plane-o" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                     class="bi bi-send-check-fill" viewBox="0 0 16 16">
+                  <path
+                    d="M15.964.686a.5.5 0 0 0-.65-.65L.767 5.855H.766l-.452.18a.5.5 0 0 0-.082.887l.41.26.001.002 4.995 3.178 1.59 2.498C8 14 8 13 8 12.5a4.5 4.5 0 0 1 5.026-4.47L15.964.686Zm-1.833 1.89L6.637 10.07l-.215-.338a.5.5 0 0 0-.154-.154l-.338-.215 7.494-7.494 1.178-.471-.47 1.178Z"/>
+                  <path
+                    d="M16 12.5a3.5 3.5 0 1 1-7 0 3.5 3.5 0 0 1 7 0Zm-1.993-1.679a.5.5 0 0 0-.686.172l-1.17 1.95-.547-.547a.5.5 0 0 0-.708.708l.774.773a.75.75 0 0 0 1.174-.144l1.335-2.226a.5.5 0 0 0-.172-.686Z"/>
+                </svg>
+              </i></button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

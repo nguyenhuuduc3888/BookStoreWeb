@@ -2,10 +2,12 @@ package all.service.impl;
 
 import all.model.AppUser;
 import all.repository.UserRepository;
+import all.repository.UserRoleRepository;
 import all.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -21,6 +23,8 @@ public class UserService implements IUserService {
     UserRepository userRepository;
     @Autowired
     private JavaMailSender javaMailSender;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
 
     @Override
     public List<AppUser> findAll() {
@@ -31,6 +35,7 @@ public class UserService implements IUserService {
     public AppUser findByName(String name) {
         return userRepository.findAppUserByName(name);
     }
+
 
     @Override
     public AppUser findHistory(String username) {
@@ -72,7 +77,15 @@ public class UserService implements IUserService {
 
     @Override
     public void save(AppUser appUser) {
+        if (userRepository.findAppUserByName(appUser.getUsername()) != null){
+            return;
+        }
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        String encryptedPassword = passwordEncoder.encode(appUser.getPassword());
+        appUser.setPassword(encryptedPassword);
         userRepository.save(appUser.getUsername(), appUser.getPassword(), appUser.getEmail());
+        List<AppUser> appUsers = userRepository.findAll();
+        userRoleRepository.save(appUsers.toArray().length);
     }
 
     @Override

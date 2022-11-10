@@ -1,0 +1,17 @@
+<div class="container" style="margin-top: 50px;">
+  <form class="example-form" [formGroup]="loginForm" (ngSubmit)="onFormSubmit(loginForm.value)">
+    <mat-form-field class="example-full-width mt-5" appearance="outline">
+      <label  style="color: #eba850;margin-top: 2px">Tên Chát</label>
+      <input matInput placeholder="Nhập Tên Của Bạn" formControlName="nickname"
+             [errorStateMatcher]="matcher">
+      <mat-error
+        *ngIf="!loginForm.get('nickname').valid && loginForm.get('nickname').touched">Vui Lòng Nhập Tên Của Bạn
+      </mat-error>
+    </mat-form-field>
+    <div  class="button-row mb-5">
+      <button style="margin-top: 20px"  class="btn btn-outline-success" type="submit" [disabled]="!loginForm.valid"  >
+       Đăng nhập
+      </button>
+    </div>
+  </form>
+</div>

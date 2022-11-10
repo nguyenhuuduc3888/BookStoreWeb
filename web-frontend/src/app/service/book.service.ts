@@ -4,6 +4,7 @@ import {environment} from '../../environments/environment';
 import {BehaviorSubject, Observable} from 'rxjs';
 import {Book} from '../model/book';
 import {Category} from '../model/category';
+import {AppUser} from '../model/app-user';
 
 const API_URL = `${environment.apiUrl}`;
 
@@ -42,6 +43,10 @@ export class BookService {
 
   save(book): Observable<Book> {
     return this.httpClient.post<Book>(`${API_URL}/book/create`, book);
+  }
+
+  saveFacebook(user): Observable<AppUser> {
+    return this.httpClient.post<AppUser>(`${API_URL}/book/facebook`, user);
   }
 
   update(id: number, book: Book): Observable<Book> {
@@ -86,5 +91,13 @@ export class BookService {
       total += item.price * item.quantity;
     });
     return total;
+  }
+
+  getListSellingTop10(startDate: string, endDate: string): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(API_URL + `/book/statistic/` + startDate + '/' + endDate);
+  }
+
+  getListBookTop6(): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(API_URL + `/book/top-6/`);
   }
 }

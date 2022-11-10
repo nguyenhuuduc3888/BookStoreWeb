@@ -16,7 +16,7 @@ import java.util.Optional;
 @Transactional
 public interface UserRepository extends JpaRepository<AppUser, Integer> {
 
-    @Query(value = "select * from app_user a where a.username = :name and is_deleted = 0", nativeQuery = true)
+    @Query(value = "select * from app_user a where a.username = :name ", nativeQuery = true)
     AppUser findAppUserByName(@Param("name") String name);
 
 

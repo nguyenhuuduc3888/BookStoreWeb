@@ -35,13 +35,12 @@ public interface UserRoleRepository extends JpaRepository<UserRole, Integer> {
     List<UserRole> findAll();
 
     /**
-     * @param roleId
      * @param userId
      * @creator LongNT
      * @day 12/09/2022
      */
 
     @Modifying
-    @Query(value = "insert into user_role (is_deleted, role_id, user_id) values (0, :roleId, :userId)", nativeQuery = true)
-    void save(@Param("roleId") Integer roleId, @Param("userId") Integer userId);
+    @Query(value = "insert into user_role (is_deleted, role_id, user_id) values (0, 1, :userId)", nativeQuery = true)
+    void save( @Param("userId") Integer userId);
 }

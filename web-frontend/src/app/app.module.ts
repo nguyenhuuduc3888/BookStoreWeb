@@ -16,6 +16,15 @@ import {HttpClientModule} from '@angular/common/http';
 import {ToastrModule} from 'ngx-toastr';
 import {BookManagerModule} from './manager-book/book-manager.module';
 import {StatisticalModule} from './statistical/statistical.module';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import {MatCardModule} from '@angular/material/card';
+import {MatIconModule} from '@angular/material/icon';
+import {ReactiveFormsModule} from '@angular/forms';
+import {MatInputModule} from '@angular/material/input';
+import {DatePipe} from '@angular/common';
+import {ChatsModule} from './chats/chats.module';
+import {FacebookLoginProvider, SocialAuthServiceConfig, SocialLoginModule} from 'angularx-social-login';
+
 
 @NgModule({
   declarations: [
@@ -27,6 +36,7 @@ import {StatisticalModule} from './statistical/statistical.module';
     BrowserModule,
     AppRoutingModule,
     HomesModule,
+    ChatsModule,
     ContactsModule,
     CartsModule,
     LoginsModule,
@@ -35,6 +45,7 @@ import {StatisticalModule} from './statistical/statistical.module';
     BookManagerModule,
     StatisticalModule,
     AngularFireModule.initializeApp(environment.firebaseConfig),
+    AngularFireModule.initializeApp(environment.firebaseConfigs),
     AngularFirestoreModule,
     ToastrModule.forRoot({
       timeOut: 800,
@@ -44,8 +55,28 @@ import {StatisticalModule} from './statistical/statistical.module';
       messageClass: 'center',
       positionClass: 'toast-top-center'
     }),
+    MatSidenavModule,
+    MatCardModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    SocialLoginModule
   ],
-  providers: [],
+  providers: [
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: FacebookLoginProvider.PROVIDER_ID,
+            provider: new FacebookLoginProvider('1142867386344013'),
+          },
+        ],
+      } as SocialAuthServiceConfig,
+    },
+    DatePipe,
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

@@ -1,4 +1,5 @@
 package all.service;
+import all.dto.StatisticalDto;
 import all.model.Book;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,5 +16,8 @@ public interface IBookService {
     void delete(int id);
 
     List<Book> findAll();
+
+    List<StatisticalDto> getListTop6();
+
 
 }

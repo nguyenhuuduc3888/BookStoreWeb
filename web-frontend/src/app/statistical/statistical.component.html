@@ -1,8 +1,20 @@
-<div class="vc_empty_space" style="height: 40px"><span class="vc_empty_space_inner"></span></div>
-<div id="divChart" class="container">
-  <h1 style="color: #EBA850;text-align: center">Thống kê doanh thu </h1>
-  <div >
-    <canvas id="myChart" ></canvas>
+<div class="vc_empty_space" style="height: 45px"><span class="vc_empty_space_inner"></span></div>
+<h1 style="color: #EBA850;text-align: center">Thống kê sách được mua nhiều nhất </h1>
+<form [formGroup]="form" (submit)="submitForm()">
+  <div class="container" style="box-shadow: 0 6px 20px 0 rgba(0, 0, 0, 0.19);border-radius: 20px">
+    <div class="row">
+      <div class="col-2 mt-5"><label>Ngày bắt đầu:
+        <input type="date" class="form-control" formControlName="startDate">
+      </label>
+        <label style="margin-top: 10px">Ngày kết thúc:
+          <input type="date" class="form-control" formControlName="endDate">
+        </label>
+        <button style="margin-top: 10px;background-color: #EBA850" class="btn btn-success" type="submit">Thống kê
+        </button>
+      </div>
+      <div class="col-10" style="max-height: 500px">
+        <canvas id="myChart"></canvas>
+      </div>
+    </div>
   </div>
-</div>
-
+</form>

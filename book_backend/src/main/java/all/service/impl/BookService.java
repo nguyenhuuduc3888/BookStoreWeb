@@ -1,5 +1,6 @@
 package all.service.impl;
 
+import all.dto.StatisticalDto;
 import all.model.Book;
 import all.repository.IBookRepository;
 import all.service.IBookService;
@@ -38,5 +39,10 @@ public class BookService implements IBookService {
     @Override
     public List<Book> findAll() {
         return bookRepository.findAll();
+    }
+
+    @Override
+    public List<StatisticalDto> getListTop6() {
+        return bookRepository.getBookTop6();
     }
 }

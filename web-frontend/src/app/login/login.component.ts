@@ -1,13 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {Title} from '@angular/platform-browser';
 import {FormBuilder, FormGroup} from '@angular/forms';
-import { TokenStorageService } from '../service/token-storage.service';
+import {TokenStorageService} from '../service/token-storage.service';
 import {AuthService} from '../service/auth.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
+import {Router, ActivatedRoute} from '@angular/router';
+import {ToastrService} from 'ngx-toastr';
 import {ShareService} from '../service/share.service';
 import {CookieService} from 'ngx-cookie-service';
 import Swal from 'sweetalert2';
+import {FacebookLoginProvider, SocialAuthService, SocialUser} from 'angularx-social-login';
+import {BookService} from '../service/book.service';
 
 @Component({
   selector: 'app-login',
@@ -19,6 +21,8 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   username: string;
   returnUrl: string;
+  socialUser: SocialUser;
+  isLogged: boolean;
 
   constructor(private title: Title, private formBuild: FormBuilder,
               private tokenStorageService: TokenStorageService,
@@ -27,7 +31,9 @@ export class LoginComponent implements OnInit {
               private route: ActivatedRoute,
               private toastr: ToastrService,
               private shareService: ShareService,
-              private cookieService: CookieService,) {
+              private cookieService: CookieService,
+              private authSocial: SocialAuthService,
+              private book: BookService) {
     this.title.setTitle('Đăng nhập');
   }
 
@@ -83,25 +89,27 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  // signInWithFB(): void {
-  //   this.social.authState.subscribe(user => {
-  //     console.log(user);
-  //     this.loginService.goLogin({username: user.email, password: user.id}).subscribe(() => {
-  //       setTimeout(() => {
-  //         this.router.navigateByUrl('').then(() => {
-  //           this.toastr.success('Đăng nhập thành công');
-  //           this.btnLoginStatus = true;
-  //           this.sendMessage();
-  //           console.log(user);
-  //         });
-  //       }, 2000);
-  //     });
-  //   }, error => {
-  //     this.toastr.error('Tên đăng nhập hoặc mật khẩu không đúng');
-  //     console.log('error login');
-  //     this.btnLoginStatus = true;
-  //   });
-  //   this.social.signIn(FacebookLoginProvider.PROVIDER_ID);
-  // }
+  signInWithFB(): void {
+    this.authSocial.signIn(FacebookLoginProvider.PROVIDER_ID).then(data => {
+      this.socialUser = data;
+      this.isLogged = (data != null);
+      const user: { password: string; email: string; username: string } = {
+        email: data.email,
+        password: data.id,
+        username: data.name,
+      };
+      this.book.saveFacebook(user).subscribe(next => {
+        this.tokenStorageService.saveTokenSession(data.authToken);
+        this.tokenStorageService.saveUserSession(data);
+        this.isLogged = true;
+        this.router.navigateByUrl('');
+        this.formGroup = this.formBuild.group({
+          username: [user.username],
+          password: [user.password]
+        });
+        this.onSubmit();
+      });
+    });
+  }
 
 }
