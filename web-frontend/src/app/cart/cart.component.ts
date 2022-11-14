@@ -48,7 +48,6 @@ export class CartComponent implements OnInit {
           };
         }
         this.cartDetailService.saveCartDetail(username, this.carts).subscribe();
-        console.log(this.carts + ' luu xuong database');
         Swal.fire({
           title: 'Thanh toán thành công',
           icon: 'success',

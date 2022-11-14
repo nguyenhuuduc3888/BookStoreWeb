@@ -1,6 +1,10 @@
 package all.service.impl;
 
+import all.dto.CartDetailDto;
 import all.model.AppUser;
+import all.model.Book;
+import all.model.Cart;
+import all.model.CartDetail;
 import all.repository.UserRepository;
 import all.repository.UserRoleRepository;
 import all.service.IUserService;
@@ -77,7 +81,7 @@ public class UserService implements IUserService {
 
     @Override
     public void save(AppUser appUser) {
-        if (userRepository.findAppUserByName(appUser.getUsername()) != null){
+        if (userRepository.findAppUserByName(appUser.getUsername()) != null) {
             return;
         }
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
@@ -111,5 +115,53 @@ public class UserService implements IUserService {
     @Override
     public Boolean existsEmail(String email) {
         return email.equals(userRepository.existsEmail(email));
+    }
+
+    @Override
+    public void sendEmail(Cart cart, List<CartDetailDto> cartDetails) throws MessagingException, UnsupportedEncodingException {
+        double totalMany = 0;
+        String name = "";
+        int quantity = 0;
+        double many = 0;
+        for (CartDetailDto item : cartDetails) {
+            CartDetail cartDetail = new CartDetail();
+            cartDetail.setCart(cart);
+            cartDetail.setBook(item.getBook());
+            cartDetail.setQuantity(item.getQuantity());
+            quantity = cartDetail.getQuantity();
+            many = cartDetail.getBook().getPrice();
+            totalMany = item.getQuantity() * item.getBook().getPrice();
+            name = item.getBook().getBookName();
+        }
+        Book book = new Book();
+        String subject = "Đơn thanh toán của bạn";
+        String mailContent = "";
+//        String confirmUrl = "http://localhost:4200/verify-reset-password/" + userName;
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, "UTF-8");
+        helper.setFrom("nguyenhuuduc3888@gmail.com", "Book Store");
+        helper.setTo(cart.getUser().getEmail());
+        helper.setSubject(subject);
+        mailContent = "<h1 style='color:red'>Xin chào: " + cart.getUser().getName() + "</h1>" +
+                "<h2 style ='color:green'> Thanh toán thành công" +
+                "<br>" +
+                " số lượng: " + quantity +
+                "<br>" +
+                " giá tiền: " + many +
+                "<br>" +
+                " tổng tiền: " + totalMany +
+                "<br>" +
+                " tên sách: " + name +
+                "<br>" +
+                " vào ngày " + cart.getCreateDate() +
+                "<br>" +
+                " giờ " + cart.getCreateTime() +
+                "<br>" +
+                "</h2 > " +
+                "<h3 style='color:red'>Cảm ơn đã mua hàng tại shop của chúng tôi </h3>" +
+                "<span style='color:red'>" + " --BookStore-- " + "</span>";
+        helper.setText(mailContent, true);
+        javaMailSender.send(message);
+
     }
 }

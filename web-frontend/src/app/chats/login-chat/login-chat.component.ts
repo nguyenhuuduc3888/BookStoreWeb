@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ErrorStateMatcher} from '@angular/material/core';
 import {FormBuilder, FormControl, FormGroup, FormGroupDirective, NgForm, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import firebase from 'firebase';
 import {environment} from '../../../environments/environment';
+import {TokenStorageService} from '../../service/token-storage.service';
+
 firebase.initializeApp(environment.firebaseConfigs);
 
 export class MyErrorStateMatcher implements ErrorStateMatcher {
@@ -12,6 +14,7 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
     return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
   }
 }
+
 @Component({
   selector: 'app-login-chat',
   templateUrl: './login-chat.component.html',
@@ -20,18 +23,19 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
 export class LoginChatComponent implements OnInit {
 
   loginForm: FormGroup;
-  nickname = '';
+  nickname = this.tokenStorageService.getUser().username.name;
   ref = firebase.database().ref('users/');
   matcher = new MyErrorStateMatcher();
 
-  constructor(private router: Router, private formBuilder: FormBuilder) { }
+  constructor(private router: Router, private formBuilder: FormBuilder, private tokenStorageService: TokenStorageService) {
+  }
 
   ngOnInit() {
     if (localStorage.getItem('nickname')) {
       this.router.navigate(['/room/list']);
     }
     this.loginForm = this.formBuilder.group({
-      nickname : [null, Validators.required]
+      nickname: [this.tokenStorageService.getUser().username.name, Validators.required]
     });
   }
 

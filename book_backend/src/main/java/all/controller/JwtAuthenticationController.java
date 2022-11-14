@@ -1,5 +1,5 @@
 package all.controller;
-import all.configSecurity.JwtTokenUtil;
+import all.controller.configSecurity.JwtTokenUtil;
 import all.model.JwtRequest;
 import all.model.JwtResponse;
 import all.model.MessageResponse;
@@ -18,8 +18,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import javax.mail.MessagingException;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package all.configSecurity;
+package all.controller.configSecurity;
 import all.common.MyConstants;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

@@ -1,4 +1,4 @@
-package all.configSecurity;
+package all.controller.configSecurity;
 import all.service.impl.JwtUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.springframework.beans.factory.annotation.Autowired;

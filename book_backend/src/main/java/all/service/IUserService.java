@@ -1,6 +1,8 @@
 package all.service;
 
+import all.dto.CartDetailDto;
 import all.model.AppUser;
+import all.model.Cart;
 
 import javax.mail.MessagingException;
 import java.io.UnsupportedEncodingException;
@@ -29,4 +31,6 @@ public interface IUserService {
     Boolean existsUsername(String username);
 
     Boolean existsEmail(String email);
+
+    void sendEmail(Cart cart, List<CartDetailDto> cartDetails) throws MessagingException, UnsupportedEncodingException;
 }

@@ -1,4 +1,4 @@
-package all.configSecurity;
+package all.controller.configSecurity;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

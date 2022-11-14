@@ -15,6 +15,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
+import java.io.UnsupportedEncodingException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.LinkedList;
@@ -111,7 +113,8 @@ public class BookRestController {
     }
 
     @PostMapping("/save-cart/{username}")
-    public ResponseEntity<List<CartDetailDto>> saveCart(@PathVariable String username, @RequestBody List<CartDetailDto> cartDetails) {
+    public ResponseEntity<List<CartDetailDto>> saveCart(@PathVariable String username,
+                                                        @RequestBody List<CartDetailDto> cartDetails) throws MessagingException, UnsupportedEncodingException {
         AppUser appUser = userService.findByName(username);
         Cart cart = new Cart();
         cart.setCreateDate(LocalDate.now());
@@ -127,6 +130,7 @@ public class BookRestController {
             cartDetail.setQuantity(item.getQuantity());
             cartDetailService.save(cartDetail);
         }
+        userService.sendEmail(cart, cartDetails);
         return new ResponseEntity<>(null, HttpStatus.CREATED);
     }
 
@@ -177,4 +181,6 @@ public class BookRestController {
         userService.save(user);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
+
+
 }
