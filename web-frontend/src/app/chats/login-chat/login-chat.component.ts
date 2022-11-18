@@ -21,9 +21,8 @@ export class MyErrorStateMatcher implements ErrorStateMatcher {
   styleUrls: ['./login-chat.component.css']
 })
 export class LoginChatComponent implements OnInit {
-
   loginForm: FormGroup;
-  nickname = this.tokenStorageService.getUser().username.name;
+  nickname = this.tokenStorageService.getUser().username;
   ref = firebase.database().ref('users/');
   matcher = new MyErrorStateMatcher();
 
@@ -35,7 +34,7 @@ export class LoginChatComponent implements OnInit {
       this.router.navigate(['/room/list']);
     }
     this.loginForm = this.formBuilder.group({
-      nickname: [this.tokenStorageService.getUser().username.name, Validators.required]
+      nickname: [this.tokenStorageService.getUser().username, Validators.required]
     });
   }
 

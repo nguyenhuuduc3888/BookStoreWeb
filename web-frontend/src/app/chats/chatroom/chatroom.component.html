@@ -1,52 +1,4 @@
-<!--<div class="example-container mat-elevation-z8">-->
-<!--  <mat-drawer-container class="drawer-container">-->
-<!--    <mat-drawer mode="side" opened class="left-drawer">-->
-<!--      <div class="users-pane">-->
-<!--        <mat-card class="users-card" *ngFor="let user of users">-->
-<!--          <p style="color: #3ac162">Người Chát:</p>  <span>{{user.nickname}}</span>-->
-<!--        </mat-card>-->
-<!--        <button class="btn btn-outline-success" (click)="exitChat()">-->
-<!--          Đăng xuất-->
-<!--        </button>-->
-<!--      </div>-->
-<!--    </mat-drawer>-->
-<!--    <mat-drawer-content class="chat-pane">-->
-<!--      <div #chatcontent [scrollTop]="scrolltop" class="chat-content">-->
-<!--        <div class="message-box" *ngFor="let chat of chats">-->
-<!--          <div class="chat-status" text-center *ngIf="chat.type==='join'||chat.type==='exit';else message">-->
-<!--            <span class="chat-date">{{chat.date | date:'short'}}</span>-->
-<!--            <span class="chat-content-center">{{chat.message}}</span>-->
-<!--          </div>-->
-<!--          <ng-template #message>-->
-<!--            <div class="chat-message">-->
-<!--              <div class="right-bubble" [ngClass]="{'right-bubble': chat.nickname === nickname, 'left-bubble': chat.nickname !== nickname}">-->
-<!--                <span class="msg-name" *ngIf="chat.nickname === nickname">Tôi</span>-->
-<!--                <span class="msg-name" *ngIf="chat.nickname !== nickname">{{chat.nickname}}</span>-->
-<!--                <span class="msg-date"> at {{chat.date | date:'short'}}</span>-->
-<!--                <p text-wrap>{{chat.message}}</p>-->
-<!--              </div>-->
-<!--            </div>-->
-<!--          </ng-template>-->
-<!--        </div>-->
-<!--      </div>-->
-<!--      <footer class="sticky-footer">-->
-<!--        <form class="message-form" [formGroup]="chatForm" (ngSubmit)="onFormSubmit(chatForm.value)">-->
-<!--          <mat-form-field class="message-form-field">-->
-<!--            <input matInput placeholder="Nhập tin nhắn" formControlName="message"-->
-<!--                   [errorStateMatcher]="matcher">-->
-<!--            <p>-->
-<!--              <span *ngIf="!chatForm.get('message').valid && chatForm.get('message').touched">Nhập tin nhắn</span>-->
-<!--            </p>-->
-<!--            <button class="btn btn-outline-success" type="submit" [disabled]="!chatForm.valid" mat-button matSuffix mat-icon-button aria-label="Gởi">-->
-<!--              Gởi-->
-<!--            </button>-->
-<!--          </mat-form-field>-->
-<!--        </form>-->
-<!--      </footer>-->
-<!--    </mat-drawer-content>-->
-<!--  </mat-drawer-container>-->
-<!--</div>-->
-<!--<div class="vc_empty_space" style="height: 500px"><span class="vc_empty_space_inner"></span></div>-->
+
 
 
 <div style="margin-top: 60px" class="container">
@@ -85,7 +37,7 @@
         <div class="msg_history">
           <div class="message-box" *ngFor="let chat of chats">
             <div class="chat-status" text-center *ngIf="chat.type==='join'||chat.type==='exit';else message">
-              <span class="chat-date">{{chat.date | date:'short'}}</span>
+              <span class="chat-date">{{chat.date}}</span>
               <span class="chat-content-center">{{chat.message}}</span>
             </div>
             <ng-template #message>
@@ -93,8 +45,8 @@
                 <div class="right-bubble"
                      [ngClass]="{'right-bubble': chat.nickname === nickname, 'left-bubble': chat.nickname !== nickname}">
                   <span class="msg-name" *ngIf="chat.nickname === nickname">Tôi</span>
-                  <span class="msg-name" *ngIf="chat.nickname !== nickname">{{chat.nickname}}</span>
-                  <span style="margin-left: 5px" class="msg-date"> đã gởi lúc  {{chat.date | date:'short'}}</span>
+                  <span class="msg-name" *ngIf="chat.nickname !== nickname">{{chat.nickname}} </span>
+                  <span style="margin-left: 5px" class="msg-date"> đã gởi lúc  {{chat.date}}</span>
                   <p text-wrap style="color: black">{{chat.message}}</p>
                 </div>
               </div>

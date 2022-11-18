@@ -97,7 +97,7 @@ export class BookService {
     return this.httpClient.get<Book[]>(API_URL + `/book/statistic/` + startDate + '/' + endDate);
   }
 
-  getListBookTop6(): Observable<Book[]> {
-    return this.httpClient.get<Book[]>(API_URL + `/book/top-6/`);
+  getListBookTop(): Observable<Book[]> {
+    return this.httpClient.get<Book[]>(API_URL + `/book/top`);
   }
 }

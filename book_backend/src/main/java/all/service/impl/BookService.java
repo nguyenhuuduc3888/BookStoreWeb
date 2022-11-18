@@ -42,7 +42,7 @@ public class BookService implements IBookService {
     }
 
     @Override
-    public List<StatisticalDto> getListTop6() {
-        return bookRepository.getBookTop6();
+    public List<StatisticalDto> getListTop() {
+        return bookRepository.getBookTop();
     }
 }

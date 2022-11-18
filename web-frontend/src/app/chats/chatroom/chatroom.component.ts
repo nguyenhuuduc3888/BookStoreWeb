@@ -35,7 +35,7 @@ export class ChatroomComponent implements OnInit {
   chatForm: FormGroup;
   nickname = '';
   roomname = '';
-  message = '';
+  message = 'Đã vào phòng';
   users = [];
   chats = [];
   matcher = new MyErrorStateMatcher();
@@ -82,7 +82,7 @@ export class ChatroomComponent implements OnInit {
     chat.nickname = this.nickname;
     chat.date = this.datepipe.transform(new Date(), 'dd/MM/yyyy HH:mm:ss');
     chat.message = `${this.nickname} rời khỏi phòng`;
-    chat.type = 'thoát';
+    chat.type = 'massage';
     const newMessage = firebase.database().ref('chats/').push();
     newMessage.set(chat);
 
@@ -95,7 +95,6 @@ export class ChatroomComponent implements OnInit {
         userRef.update({status: 'offline'});
       }
     });
-
     this.router.navigate(['/room/list']);
   }
 }

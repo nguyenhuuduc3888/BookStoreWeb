@@ -32,7 +32,7 @@ public interface IBookRepository extends JpaRepository<Book, Integer> {
             " from book join cart_detail cd on book.id = cd.book_id" +
             " join cart c on cd.cart_id = c.id" +
             " group by cd.book_id order by sum(cd.quantity) desc" +
-            "  limit 6", nativeQuery = true)
-    List<StatisticalDto> getBookTop6();
+            "  limit 8", nativeQuery = true)
+    List<StatisticalDto> getBookTop();
 
 }

@@ -167,9 +167,9 @@ public class BookRestController {
     }
 
 
-    @GetMapping("/top-6")
-    public ResponseEntity<List<StatisticalDto>> getListBookTop6() {
-        List<StatisticalDto> statisticDto = bookService.getListTop6();
+    @GetMapping("/top")
+    public ResponseEntity<List<StatisticalDto>> getListBookTop() {
+        List<StatisticalDto> statisticDto = bookService.getListTop();
         if (statisticDto.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }

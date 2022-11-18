@@ -17,7 +17,7 @@ public interface IBookService {
 
     List<Book> findAll();
 
-    List<StatisticalDto> getListTop6();
+    List<StatisticalDto> getListTop();
 
 
 }

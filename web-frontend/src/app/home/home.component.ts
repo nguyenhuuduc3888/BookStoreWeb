@@ -33,7 +33,7 @@ export class HomeComponent implements OnInit {
   nameSearch = '';
   authorSearch = '';
   bookList: Book [] = [];
-  bookListTop6: Book [] = [];
+  bookListTop: Book [] = [];
   categoryList: Category [] = [];
   number: number;
   indexPagination = 0;
@@ -112,9 +112,8 @@ export class HomeComponent implements OnInit {
   }
 
   getListTop6() {
-    this.bookService.getListBookTop6().subscribe((data?: any) => {
-      this.bookListTop6 = data;
-      console.log(this.bookListTop6 + ' Top 6');
+    this.bookService.getListBookTop().subscribe((data?: any) => {
+      this.bookListTop = data;
     });
   }
 
